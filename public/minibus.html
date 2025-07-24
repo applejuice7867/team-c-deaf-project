@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Minibus Information</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <h1>Minibus Information</h1>
+    <p>Information and real-time schedules for Hong Kong minibuses.</p>
+    <!-- Content placeholder - can be expanded with API calls -->
+
+    <button id="btn-home" class="large-button">Back to Home</button>
+  </main>
+  <script>
+    document.getElementById('btn-home').addEventListener('click', () => {
+      window.location.href = '/home/applejuice/team-c-deaf-project/public/index.html';
+    });
+  </script>
+</body>
+</html>
+
+
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(DeafElderlyTransitAidApp());
+}
+
+class DeafElderlyTransitAidApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'HK Deaf Elderly Transit Aid',
+      theme: ThemeData(
+        primaryColor: Color(0xFFD46A6A),
+        scaffoldBackgroundColor: Color(0xFFFAF9F6),
+        textTheme: TextTheme(
+          headline1: TextStyle(
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFFD46A6A),
+          ),
+          bodyText1: TextStyle(fontSize: 20, color: Color(0xFF31333B)),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            primary: Color(0xFFFFA54B),
+            padding: EdgeInsets.symmetric(vertical: 24),
+            textStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        ),
+      ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => HomePage(),
+        '/mtr': (context) => MtrPage(),
+        '/minibus': (context) => MinibusPage(),
+      },
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('HK Deaf Elderly Transit Aid',
+                    style: Theme.of(context).textTheme.headline1,
+                    textAlign: TextAlign.center),
+                SizedBox(height: 48),
+                ElevatedButton(
+                  onPressed: () => Navigator.pushNamed(context, '/mtr'),
+                  child: SizedBox(
+                      width: double.infinity, child: Center(child: Text('MTR'))),
+                ),
+                SizedBox(height: 24),
+                ElevatedButton(
+                  onPressed: () => Navigator.pushNamed(context, '/minibus'),
+                  child: SizedBox(
+                      width: double.infinity,
+                      child: Center(child: Text('Minibus'))),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class MtrPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('MTR Information'),
+      ),
+      body: Center(
+        child: Padding(
+          padding: EdgeInsets.all(24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Information and real-time schedules for MTR stations.',
+                style: Theme.of(context).textTheme.bodyText1,
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 48),
+              ElevatedButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('Back to Home'),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class MinibusPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Minibus Information'),
+      ),
+      body: Center(
+        child: Padding(
+          padding: EdgeInsets.all(24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Information and real-time schedules for Hong Kong minibuses.',
+                style: Theme.of(context).textTheme.bodyText1,
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 48),
+              ElevatedButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('Back to Home'),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
