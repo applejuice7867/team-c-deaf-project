@@ -30,15 +30,17 @@
     margin-top: 1.2rem;
     text-align: left;
   }
-  input[type="text"] {
+  input[type="text"],
+  textarea {
     font-size: 1.3rem;
     padding: 0.8rem;
     width: 100%;
     border-radius: 12px;
     border: 2px solid #FFD966;
     box-sizing: border-box;
+    resize: vertical;
   }
-  button#fetch-schedule, .large-button {
+  button#fetch-schedule, .large-button, #speech-toggle {
     margin-top: 1.5rem;
     padding: 1.1rem;
     width: 100%;
@@ -51,11 +53,14 @@
     cursor: pointer;
     box-shadow: 0 2px 8px rgba(212, 106, 106, 0.07);
     user-select: none;
+    transition: background-color 0.3s ease;
   }
   button#fetch-schedule:hover,
   button#fetch-schedule:focus,
   .large-button:hover,
-  .large-button:focus {
+  .large-button:focus,
+  #speech-toggle:hover,
+  #speech-toggle:focus {
     background-color: #d46a6a;
     outline: none;
   }
@@ -93,6 +98,11 @@
     <label for="stop-id-input">站牌編號（Stop ID）</label>
     <input type="text" id="stop-id-input" aria-label="輸入小巴站牌編號" placeholder="例如：1001" />
 
+    <!-- Cantonese Speech to Text Section -->
+    <label for="speech-textarea">語音文字輸出</label>
+    <textarea id="speech-textarea" rows="4" readonly placeholder="語音轉文字結果會顯示於此..." style="font-size:1.25rem; padding:0.8rem;"></textarea>
+    <button id="speech-toggle" class="large-button" style="background-color:#d46a6a;">開始聽講話</button>
+
     <button id="fetch-schedule" disabled>查詢時間表</button>
 
     <div id="loading" style="display:none;">載入中…</div>
@@ -104,19 +114,29 @@
   </main>
 
   <script>
+    // Elements
     const stopIdInput = document.getElementById('stop-id-input');
     const fetchBtn = document.getElementById('fetch-schedule');
     const loadingEl = document.getElementById('loading');
     const errorEl = document.getElementById('error');
     const scheduleListEl = document.getElementById('schedule-list');
+    const btnHome = document.getElementById('btn-home');
+    const speechToggleBtn = document.getElementById('speech-toggle');
+    const speechTextarea = document.getElementById('speech-textarea');
 
-    // Enable fetch button only when input is not empty
+    // Back button click handler
+    btnHome.addEventListener('click', () => {
+      window.location.href = '/home/applejuice/team-c-deaf-project/public/index.html';
+    });
+
+    // Enable fetch button only when stop ID is not empty
     stopIdInput.addEventListener('input', () => {
       fetchBtn.disabled = stopIdInput.value.trim() === '';
       errorEl.style.display = 'none';
       scheduleListEl.innerHTML = '';
     });
 
+    // Fetch minibus ETA info
     fetchBtn.addEventListener('click', async () => {
       const stopId = stopIdInput.value.trim();
       if (!stopId) return;
@@ -126,7 +146,6 @@
       scheduleListEl.innerHTML = '';
 
       try {
-        // Build API URL
         const url = `https://data.etagmb.gov.hk/eta/stop/${encodeURIComponent(stopId)}`;
 
         const response = await fetch(url);
@@ -136,26 +155,19 @@
 
         loadingEl.style.display = 'none';
 
-        // Assuming data structure based on documentation and typical ETA response:
-        // data might contain an array of minibuses arriving at this stop
-        
+        // Assuming data is an array of minibuses arriving at the stop
         if (!data || !Array.isArray(data) || data.length === 0) {
           scheduleListEl.innerHTML = '<p>沒有即時資料。</p>';
           return;
         }
 
-        // Build list of ETA info
         let html = '<ul>';
         data.forEach(item => {
-          // For each arriving minibus, display route number, destination and ETA
-          // Adjust the keys based on actual API response; common keys include:
-          // Route, Destination, ETA (or EstimateTime)
           const route = item.Route || item.route || '未知路線';
           const dest = item.Destination || item.destination || '未知目的地';
           const eta = item.EstimateTime || item.ETA || item.estimatedTime || '未知時間';
 
           let etaText;
-          // If ETA is in seconds, convert to minutes or show exact time
           if (typeof eta === 'number') {
             if (eta <= 0) {
               etaText = '即將抵達';
@@ -179,9 +191,71 @@
       }
     });
 
-    document.getElementById('btn-home').addEventListener('click', () => {
-      window.location.href = '/home/applejuice/team-c-deaf-project/public/index.html';
-    });
+    /* ----------------------- */
+    /* Cantonese Speech-to-Text */
+    /* ----------------------- */
+
+    let recognition;
+    let recognizing = false;
+
+    // Check for browser support
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      speechToggleBtn.disabled = true;
+      speechToggleBtn.textContent = '瀏覽器不支援語音識別';
+    } else {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognition = new SpeechRecognition();
+
+      recognition.lang = 'yue-Hant-HK'; // Cantonese (Hong Kong)
+      recognition.continuous = true;
+      recognition.interimResults = true;
+
+      recognition.onstart = () => {
+        recognizing = true;
+        speechToggleBtn.textContent = '停止聆聽';
+        errorEl.style.display = 'none';
+      };
+
+      recognition.onerror = (event) => {
+        console.error('語音識別錯誤:', event.error);
+        if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+          errorEl.style.display = 'block';
+          errorEl.textContent = '請允許瀏覽器使用麥克風後再試。';
+        }
+      };
+
+      recognition.onend = () => {
+        recognizing = false;
+        speechToggleBtn.textContent = '開始聽講話';
+      };
+
+      recognition.onresult = (event) => {
+        let interimTranscript = '';
+        let finalTranscript = '';
+
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const transcript = event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+            finalTranscript += transcript;
+          } else {
+            interimTranscript += transcript;
+          }
+        }
+        speechTextarea.value = finalTranscript + interimTranscript;
+      };
+
+      speechToggleBtn.addEventListener('click', () => {
+        if (recognizing) {
+          recognition.stop();
+          recognizing = false;
+          speechToggleBtn.textContent = '開始聽講話';
+        } else {
+          speechTextarea.value = '';
+          recognition.start();
+        }
+      });
+    }
   </script>
 </body>
 </html>
+
