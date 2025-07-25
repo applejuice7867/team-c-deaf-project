@@ -1,20 +1,184 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-HK">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Minibus Information</title>
+<title>專線小巴資訊</title>
 <link rel="stylesheet" href="style.css" />
+<style>
+  body {
+    background: #faf9f6;
+    color: #31333b;
+    font-family: "PingFang TC", "Microsoft JhengHei", Arial, sans-serif;
+  }
+  main {
+    max-width: 480px;
+    margin: auto;
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+  h1 {
+    font-size: 2.3rem;
+    color: #d46a6a;
+    margin-bottom: 1.4rem;
+  }
+  label {
+    display: block;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+    margin-top: 1.2rem;
+    text-align: left;
+  }
+  input[type="text"] {
+    font-size: 1.3rem;
+    padding: 0.8rem;
+    width: 100%;
+    border-radius: 12px;
+    border: 2px solid #FFD966;
+    box-sizing: border-box;
+  }
+  button#fetch-schedule, .large-button {
+    margin-top: 1.5rem;
+    padding: 1.1rem;
+    width: 100%;
+    font-size: 1.4rem;
+    border-radius: 15px;
+    border: none;
+    background-color: #ffa54b;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(212, 106, 106, 0.07);
+    user-select: none;
+  }
+  button#fetch-schedule:hover,
+  button#fetch-schedule:focus,
+  .large-button:hover,
+  .large-button:focus {
+    background-color: #d46a6a;
+    outline: none;
+  }
+  #loading,
+  #error {
+    font-size: 1.3rem;
+    margin-top: 1rem;
+    font-weight: bold;
+    color: #d46a6a;
+  }
+  #schedule-list {
+    margin-top: 1rem;
+    max-height: 60vh;
+    overflow-y: auto;
+    text-align: left;
+  }
+  #schedule-list ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  #schedule-list li {
+    background: #fff8f2;
+    margin-bottom: 0.8rem;
+    padding: 1rem;
+    border-radius: 10px;
+    font-size: 1.2rem;
+  }
+</style>
 </head>
 <body>
   <main>
     <h1>專線小巴</h1>
-    <p>Information and real-time schedules for Hong Kong minibuses.</p>
-    <!-- Content placeholder - can be expanded with API calls -->
+    <p>請輸入專線小巴站牌編號以查詢即時抵達時間。</p>
 
-    <button id="btn-home" class="large-button">返回</button>
+    <label for="stop-id-input">站牌編號（Stop ID）</label>
+    <input type="text" id="stop-id-input" aria-label="輸入小巴站牌編號" placeholder="例如：1001" />
+
+    <button id="fetch-schedule" disabled>查詢時間表</button>
+
+    <div id="loading" style="display:none;">載入中…</div>
+    <div id="error" style="display:none;"></div>
+
+    <div id="schedule-list"></div>
+
+    <button id="btn-home" class="large-button" style="margin-top: 2.3rem;">返回</button>
   </main>
+
   <script>
+    const stopIdInput = document.getElementById('stop-id-input');
+    const fetchBtn = document.getElementById('fetch-schedule');
+    const loadingEl = document.getElementById('loading');
+    const errorEl = document.getElementById('error');
+    const scheduleListEl = document.getElementById('schedule-list');
+
+    // Enable fetch button only when input is not empty
+    stopIdInput.addEventListener('input', () => {
+      fetchBtn.disabled = stopIdInput.value.trim() === '';
+      errorEl.style.display = 'none';
+      scheduleListEl.innerHTML = '';
+    });
+
+    fetchBtn.addEventListener('click', async () => {
+      const stopId = stopIdInput.value.trim();
+      if (!stopId) return;
+
+      loadingEl.style.display = 'block';
+      errorEl.style.display = 'none';
+      scheduleListEl.innerHTML = '';
+
+      try {
+        // Build API URL
+        const url = `https://data.etagmb.gov.hk/eta/stop/${encodeURIComponent(stopId)}`;
+
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+        const data = await response.json();
+
+        loadingEl.style.display = 'none';
+
+        // Assuming data structure based on documentation and typical ETA response:
+        // data might contain an array of minibuses arriving at this stop
+        
+        if (!data || !Array.isArray(data) || data.length === 0) {
+          scheduleListEl.innerHTML = '<p>沒有即時資料。</p>';
+          return;
+        }
+
+        // Build list of ETA info
+        let html = '<ul>';
+        data.forEach(item => {
+          // For each arriving minibus, display route number, destination and ETA
+          // Adjust the keys based on actual API response; common keys include:
+          // Route, Destination, ETA (or EstimateTime)
+          const route = item.Route || item.route || '未知路線';
+          const dest = item.Destination || item.destination || '未知目的地';
+          const eta = item.EstimateTime || item.ETA || item.estimatedTime || '未知時間';
+
+          let etaText;
+          // If ETA is in seconds, convert to minutes or show exact time
+          if (typeof eta === 'number') {
+            if (eta <= 0) {
+              etaText = '即將抵達';
+            } else {
+              etaText = `${Math.round(eta / 60)} 分鐘後抵達`;
+            }
+          } else {
+            etaText = eta;
+          }
+
+          html += `<li><strong>路線：</strong>${route}<br><strong>目的地：</strong>${dest}<br><strong>預計到達時間：</strong>${etaText}</li>`;
+        });
+        html += '</ul>';
+
+        scheduleListEl.innerHTML = html;
+
+      } catch (error) {
+        loadingEl.style.display = 'none';
+        errorEl.style.display = 'block';
+        errorEl.textContent = '載入資料時出錯: ' + error.message;
+      }
+    });
+
     document.getElementById('btn-home').addEventListener('click', () => {
       window.location.href = '/home/applejuice/team-c-deaf-project/public/index.html';
     });
