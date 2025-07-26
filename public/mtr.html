@@ -5,86 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
 <title>港鐵時刻查詢</title>
 <link rel="stylesheet" href="style.css" />
-<style>
-body {
-  font-family: "PingFang TC", "Microsoft JhengHei", Arial, sans-serif;
-  background: #faf9f6;
-  color: #31333b;
-  margin: 0;
-  padding: 0;
-}
-main {
-  max-width: 480px;
-  margin: auto;
-  padding: 2rem 1rem;
-}
-h1 {
-  font-size: 2.3rem;
-  color: #d46a6a;
-  margin-bottom: 1.4rem;
-  text-align: center;
-  letter-spacing: 0.03em;
-}
-label, select, option, p, .large-button {
-  font-size: 1.3rem;
-}
-label {
-  font-weight: bold;
-  display: block;
-  margin: 1.2rem 0 0.4rem 0;
-}
-select {
-  width: 100%;
-  padding: 1rem;
-  border-radius: 12px;
-  background: #fff;
-  margin-bottom: 0.8rem;
-  border: 2px solid #FFD966;
-  font-size: 1.3rem;
-}
-button#fetch-schedule, .large-button {
-  width: 100%;
-  padding: 1.1rem;
-  font-size: 1.4rem;
-  background: #ffa54b;
-  color: #fff;
-  border: none;
-  border-radius: 15px;
-  font-weight: bold;
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
-  box-shadow: 0 2px 8px rgba(212, 106, 106, 0.07);
-}
-button#fetch-schedule:active,
-button#fetch-schedule:focus,
-.large-button:active,
-.large-button:focus {
-  background: #d46a6a;
-  outline: 2px solid #FFD966;
-}
-#schedule-list ul {
-  list-style: none;
-  padding-left: 0;
-}
-#schedule-list li {
-  background: #fff8f2;
-  margin-bottom: 0.8rem;
-  padding: 1rem;
-  border-radius: 10px;
-  font-size: 1.2rem;
-}
-#loading, #error {
-  font-size: 1.3rem;
-  margin-top: 1rem;
-  color: #d46a6a;
-  font-weight: bold;
-}
-@media (max-width: 400px) {
-    h1 { font-size: 2rem; }
-    main { padding: 1rem 0.3rem; }
-    label, select, p, .large-button { font-size: 1.06rem; }
-}
-</style>
 </head>
 <body>
   <main>
@@ -97,7 +17,7 @@ button#fetch-schedule:focus,
     <select id="station-select" aria-label="選擇港鐵車站" disabled>
       <option value="">-- 請先選擇路綫 --</option>
     </select>
-    <button id="fetch-schedule" disabled>查詢時間表</button>
+    <button id="fetch-schedule" class="large-button" >查詢時間表</button>
     <div id="loading" style="display:none;">載入中…</div>
     <div id="error" style="display:none;"></div>
     <div id="schedule-list"></div>

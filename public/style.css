@@ -3,13 +3,19 @@
 body {
   margin: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #faf9f6;
-  color: #31333b;
+  background-color: #1a1a1a; /* Dark background */
+  color: #e0e0e0; /* Light text */
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   padding: 1rem;
+  animation: fadeIn 1s ease-out forwards; /* Fade-in animation */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 main {
@@ -21,7 +27,7 @@ main {
 h1 {
   font-size: 2.5rem;
   margin-bottom: 2rem;
-  color: #d46a6a; /* Soft red from palette */
+  color: #8a2be2; /* Purple accent */
 }
 
 .button-container {
@@ -35,8 +41,8 @@ h1 {
   padding: 1.2rem;
   border: none;
   border-radius: 12px;
-  background-color: #ffa54b; /* Warm orange */
-  color: #fff;
+  background-color: #8a2be2; /* Purple accent */
+  color: #fff; /* White text for contrast */
   font-weight: bold;
   cursor: pointer;
   user-select: none;
@@ -44,13 +50,59 @@ h1 {
   outline-offset: 4px;
 }
 
+/* Add margin to large buttons for spacing, especially for the back button */
+.large-button {
+  margin-top: 1.5rem; /* Add some top margin */
+}
+
+/* Style labels for better visibility */
+label {
+  font-size: 1.4rem; /* Larger font size for labels */
+  font-weight: bold; /* Make labels bold */
+  display: block; /* Ensure labels are block elements */
+  margin-bottom: 0.5rem; /* Add some bottom margin */
+  text-align: left; /* Ensure labels are left-aligned within their containers */
+}
+
+/* Ensure main content is centered and has appropriate font sizes */
+main {
+  text-align: center; /* Center align content within main */
+}
+
+/* Adjustments for select and input elements if needed for centering or specific spacing */
+select,
+input[type="text"],
+textarea {
+  /* Existing styles are already applied from previous step */
+  /* Ensure they are centered if they are block elements */
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .large-button:focus,
 .large-button:hover {
-  background-color: #d46a6a;
+  background-color: #9370db; /* Lighter purple for hover */
   outline: none;
 }
 
 p {
   font-size: 1.25rem;
   margin-bottom: 3rem;
+}
+
+/* Styles for larger, rounded inputs and selects for accessibility */
+select,
+input[type="text"],
+textarea { /* Added textarea as it's used in minibus.html */
+  font-size: 1.4rem; /* Larger font size */
+  padding: 1.2rem; /* More padding */
+  border-radius: 15px; /* Rounded corners */
+  border: 2px solid #9370db; /* Subtle purple border */
+  box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+  margin-bottom: 1rem; /* Add some spacing below */
+}
+
+/* Adjustments for textarea specifically if needed, but keeping it general for now */
+textarea {
+  resize: vertical; /* Allow vertical resizing */
 }

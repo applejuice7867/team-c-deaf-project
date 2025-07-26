@@ -4,107 +4,15 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>HK Deaf Elderly Transit Aid - Buses</title>
-<style>
-  body {
-    margin: 0;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #faf9f6;
-    color: #31333b;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
-    padding: 1rem;
-  }
-  main {
-    max-width: 480px;
-    width: 100%;
-    text-align: center;
-  }
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    color: #d46a6a; /* Soft red from palette */
-  }
-  .button-container {
-    margin-bottom: 1.5rem;
-  }
-  .large-button {
-    font-size: 2rem;
-    padding: 1.2rem;
-    border: none;
-    border-radius: 12px;
-    background-color: #ffa54b; /* Warm orange */
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.3s ease;
-    outline-offset: 4px;
-  }
-  .large-button:focus,
-  .large-button:hover {
-    background-color: #d46a6a;
-    outline: none;
-  }
-  #back-button {
-    font-size: 1.5rem;
-    background-color: #d46a6a;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    padding: 0.8rem 1.5rem;
-    cursor: pointer;
-    margin-bottom: 2rem;
-    user-select: none;
-    transition: background-color 0.3s ease;
-    outline-offset: 4px;
-  }
-  #back-button:hover,
-  #back-button:focus {
-    background-color: #ffa54b;
-    outline: none;
-  }
-  label {
-    display: block;
-    font-size: 1.2rem;
-    margin: 0.5rem 0 0.4rem 0;
-    text-align: left;
-  }
-  select {
-    width: 100%;
-    padding: 0.8rem 1rem;
-    font-size: 1.2rem;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    margin-bottom: 1.5rem;
-    box-sizing: border-box;
-  }
-  #loading,
-  #error-message {
-    font-size: 1.3rem;
-    color: #d46a6a;
-    margin: 1rem 0;
-  }
-  ul {
-    list-style: none;
-    padding-left: 0;
-    font-size: 1.2rem;
-  }
-  li {
-    background-color: #fff3e0;
-    margin-bottom: 0.8rem;
-    padding: 1rem;
-    border-radius: 10px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  }
-</style>
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
 <main>
   <h1>九巴到站時間查詢</h1>
-  <button id="back-button" aria-label="返回首頁">返回</button>
+  
+  <div>
+  </div>
 
   <div>
     <label for="stop-select">選擇巴士站:</label>
@@ -128,6 +36,11 @@
   </div>
 
   <button id="fetch-eta-button" class="large-button" disabled>查詢 ETA</button>
+  <div>
+     <button id="back-button" class="large-button" aria-label="返回首頁">返回</button>
+  </div>
+
+  <div>
 
   <div id="loading" style="display:none;">讀取中...</div>
   <div id="error-message" style="display:none;"></div>

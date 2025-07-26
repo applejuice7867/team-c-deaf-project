@@ -5,90 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>專線小巴資訊</title>
 <link rel="stylesheet" href="style.css" />
-<style>
-  body {
-    background: #faf9f6;
-    color: #31333b;
-    font-family: "PingFang TC", "Microsoft JhengHei", Arial, sans-serif;
-  }
-  main {
-    max-width: 480px;
-    margin: auto;
-    padding: 2rem 1rem;
-    text-align: center;
-  }
-  h1 {
-    font-size: 2.3rem;
-    color: #d46a6a;
-    margin-bottom: 1.4rem;
-  }
-  label {
-    display: block;
-    font-size: 1.3rem;
-    font-weight: bold;
-    margin-bottom: 0.3rem;
-    margin-top: 1.2rem;
-    text-align: left;
-  }
-  input[type="text"],
-  textarea {
-    font-size: 1.3rem;
-    padding: 0.8rem;
-    width: 100%;
-    border-radius: 12px;
-    border: 2px solid #FFD966;
-    box-sizing: border-box;
-    resize: vertical;
-  }
-  button#fetch-schedule, .large-button, #speech-toggle {
-    margin-top: 1.5rem;
-    padding: 1.1rem;
-    width: 100%;
-    font-size: 1.4rem;
-    border-radius: 15px;
-    border: none;
-    background-color: #ffa54b;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(212, 106, 106, 0.07);
-    user-select: none;
-    transition: background-color 0.3s ease;
-  }
-  button#fetch-schedule:hover,
-  button#fetch-schedule:focus,
-  .large-button:hover,
-  .large-button:focus,
-  #speech-toggle:hover,
-  #speech-toggle:focus {
-    background-color: #d46a6a;
-    outline: none;
-  }
-  #loading,
-  #error {
-    font-size: 1.3rem;
-    margin-top: 1rem;
-    font-weight: bold;
-    color: #d46a6a;
-  }
-  #schedule-list {
-    margin-top: 1rem;
-    max-height: 60vh;
-    overflow-y: auto;
-    text-align: left;
-  }
-  #schedule-list ul {
-    list-style: none;
-    padding-left: 0;
-  }
-  #schedule-list li {
-    background: #fff8f2;
-    margin-bottom: 0.8rem;
-    padding: 1rem;
-    border-radius: 10px;
-    font-size: 1.2rem;
-  }
-</style>
 </head>
 <body>
   <main>
@@ -103,7 +19,7 @@
     <textarea id="speech-textarea" rows="4" readonly placeholder="語音轉文字結果會顯示於此..." style="font-size:1.25rem; padding:0.8rem;"></textarea>
     <button id="speech-toggle" class="large-button" style="background-color:#d46a6a;">開始聽講話</button>
 
-    <button id="fetch-schedule" disabled>查詢時間表</button>
+    <button id="fetch-schedule" class="large-button" disabled>查詢時間表</button>
 
     <div id="loading" style="display:none;">載入中…</div>
     <div id="error" style="display:none;"></div>
