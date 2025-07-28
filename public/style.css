@@ -1,10 +1,32 @@
 /* Mobile-first big, clear UI style */
 
+/* Dark mode styles */
+.dark-mode {
+  background-color: #1a1a1a; /* Dark background */
+  color: #e0e0e0; /* Light text */
+}
+
+.dark-mode h1 {
+  color: #8a2be2; /* Purple accent for heading in dark mode */
+}
+
+.dark-mode .large-button {
+  background-color: #8a2be2; /* Purple accent for buttons in dark mode */
+  color: #fff; /* White text for contrast in dark mode */
+}
+
+.dark-mode .large-button:focus,
+.dark-mode .large-button:hover {
+  background-color: #9370db; /* Lighter purple for hover in dark mode */
+  outline: none;
+}
+
+
 body {
   margin: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #1a1a1a; /* Dark background */
-  color: #e0e0e0; /* Light text */
+  background-color: white; /* Light background */
+  color: black; /* Dark text */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,6 +40,10 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
+body {
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
 main {
   max-width: 480px;
   width: 100%;
@@ -27,7 +53,7 @@ main {
 h1 {
   font-size: 2.5rem;
   margin-bottom: 2rem;
-  color: #8a2be2; /* Purple accent */
+  color: black; /* Dark text for heading */
 }
 
 .button-container {
@@ -41,18 +67,21 @@ h1 {
   padding: 1.2rem;
   border: none;
   border-radius: 12px;
-  background-color: #8a2be2; /* Purple accent */
-  color: #fff; /* White text for contrast */
+  background-color: #ff8d21; /* Orange accent */
+  color: black; /* Black text for contrast */
   font-weight: bold;
   cursor: pointer;
   user-select: none;
   transition: background-color 0.3s ease;
   outline-offset: 4px;
+  margin-top: 1.5rem; /* Add some top margin */
 }
 
-/* Add margin to large buttons for spacing, especially for the back button */
-.large-button {
-  margin-top: 1.5rem; /* Add some top margin */
+/* Light mode button hover */
+.large-button:focus,
+.large-button:hover {
+  background-color: #ffcc99; /* Light orange for hover */
+  outline: none;
 }
 
 /* Style labels for better visibility */
@@ -70,36 +99,47 @@ main {
 }
 
 /* Adjustments for select and input elements if needed for centering or specific spacing */
+body:not(.dark-mode) select {
+  border-color: #ff8d21; /* Orange border for light mode */
+}
+
+/* Adjustments for select and input elements if needed for centering or specific spacing */
 select,
 input[type="text"],
 textarea {
-  /* Existing styles are already applied from previous step */
-  /* Ensure they are centered if they are block elements */
+  /* Center block elements */
+  display: block;
   margin-left: auto;
   margin-right: auto;
-}
-
-.large-button:focus,
-.large-button:hover {
-  background-color: #9370db; /* Lighter purple for hover */
-  outline: none;
-}
-
-p {
-  font-size: 1.25rem;
-  margin-bottom: 3rem;
 }
 
 /* Styles for larger, rounded inputs and selects for accessibility */
 select,
 input[type="text"],
-textarea { /* Added textarea as it's used in minibus.html */
+textarea {
   font-size: 1.4rem; /* Larger font size */
   padding: 1.2rem; /* More padding */
   border-radius: 15px; /* Rounded corners */
-  border: 2px solid #9370db; /* Subtle purple border */
+  border: 2px solid #9370db; /* Default/Dark mode border */
   box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
   margin-bottom: 1rem; /* Add some spacing below */
+}
+body:not(.dark-mode) input[type="text"] {
+body:not(.dark-mode) textarea {
+  border-color: #ff8d21; /* Orange border for light mode textareas */
+}
+
+body:not(.dark-mode) #speech-textarea {
+  color: #ff8d21; /* Orange text for speech-to-text output in light mode */
+}
+
+  border-color: #ff8d21; /* Orange border for light mode text inputs */
+}
+
+
+/* Specific style for light mode select border */
+body:not(.dark-mode) select {
+  border-color: #ff8d21; /* Orange border for light mode */
 }
 
 /* Adjustments for textarea specifically if needed, but keeping it general for now */

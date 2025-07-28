@@ -9,6 +9,7 @@
 <body>
   <main>
     <h1>專線小巴</h1>
+    <button id="theme-toggle-button" class="large-button" style="background-color: #ff8d21; color: black; font-size: 1rem; padding: 0.5rem; margin-top: 1rem;">切換主題</button>
     <p>請輸入專線小巴站牌編號以查詢即時抵達時間。</p>
 
     <label for="stop-id-input">站牌編號（Stop ID）</label>
@@ -17,7 +18,7 @@
     <!-- Cantonese Speech to Text Section -->
     <label for="speech-textarea">語音文字輸出</label>
     <textarea id="speech-textarea" rows="4" readonly placeholder="語音轉文字結果會顯示於此..." style="font-size:1.25rem; padding:0.8rem;"></textarea>
-    <button id="speech-toggle" class="large-button" style="background-color:#d46a6a;">開始聽講話</button>
+    <button id="speech-toggle" class="large-button" style="background-color:#ff8d21;">開始聽講話</button>
 
     <button id="fetch-schedule" class="large-button" disabled>查詢時間表</button>
 
@@ -29,6 +30,7 @@
     <button id="btn-home" class="large-button" style="margin-top: 2.3rem;">返回</button>
   </main>
 
+  <script src="script.js"></script>
   <script>
     // Elements
     const stopIdInput = document.getElementById('stop-id-input');

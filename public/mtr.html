@@ -9,6 +9,7 @@
 <body>
   <main>
     <h1>港鐵時刻查詢</h1>
+    <button id="theme-toggle-button" class="large-button" style="background-color: #ff8d21; color: black; font-size: 1rem; padding: 0.5rem; margin-top: 1rem;">切換主題</button>
     <label for="line-select">請選擇路綫</label>
     <select id="line-select" aria-label="選擇港鐵路綫">
       <option value="">-- 請選擇路綫 --</option>
@@ -23,6 +24,7 @@
     <div id="schedule-list"></div>
     <button id="btn-home" class="large-button" style="margin-top: 2.3rem;">返回首頁</button>
   </main>
+  <script src="script.js"></script>
   <script>
     const lineSelect = document.getElementById('line-select');
     const stationSelect = document.getElementById('station-select');
@@ -33,12 +35,16 @@
     document.getElementById('btn-home').onclick = () => { window.location.href = "/home/applejuice/team-c-deaf-project/public/index.html" };
     // 靜態路綫站名，可依實際需求擴充
     const mtrLines = {
-      "荃灣綫": ["中環", "金鐘", "旺角", "荃灣"],
+      "荃灣綫": ["中環", "金鐘", "旺角", "荃灣", "尖沙咀", "佐敦", "油麻地", "太子", "深水埗", "長沙灣", "荔枝角", "美孚", "荔景", "葵芳", "葵興", "大窩口"],
       "港島綫": ["上環", "中環", "銅鑼灣", "柴灣", "杏花邨", "筲箕灣", "西灣河", "太古", "鰂魚涌", "北角", "炮台山", "天后", "灣仔", "金鐘", "西營盤", "香港大學", "堅尼地城"],
       "東鐵綫": ["落馬洲", "羅湖", "上水", "粉嶺", "太和", "大埔墟", "大學", "馬場", "火炭", "沙田", "大圍", "九龍塘", "旺角東", "紅磡", "會展", "金鐘"],
       "將軍澳綫": ["將軍澳", "坑口", "寶琳", "調景嶺", "油塘", "鰂魚涌", "北角", "康城"],
-      "東涌綫": ["東涌", "欣澳", "青衣", "荔景", "南昌", "奧運", "九龍", "香港"]
-    
+      "東涌綫": ["東涌", "欣澳", "青衣", "荔景", "南昌", "奧運", "九龍", "香港"],
+      "機場快綫": ["香港", "九龍", "青衣", "機場", "博覽館"],
+      "屯馬綫": ["烏溪沙", "馬鞍山", "恆安", "大水坑", "石門", "第一城", "沙田圍", "車公廟", "大圍" ,"顯徑", "鑽石山", "啟德", "宋皇臺", "土瓜灣", "何文田", "紅磡", "尖東", "柯士甸", "南昌", "美孚", "荃灣西", "錦上路", "元朗", "朗屏", "天水圍", "兆康", "屯門"],
+      "迪士尼綫": ["欣澳", "迪士尼"],
+      "觀塘綫": ["黃埔", "何文田", "油麻地", "旺角", "太子", "石硤尾", "九龍塘", "樂富", "黃大仙", "鑽石山", "彩虹", "九龍灣", "牛頭角", "觀塘", "藍田", "油塘", "調景嶺"],
+      "南港島綫": ["金鐘", "海洋公園", "黃竹坑", "利東", "海怡半島"]
     };
     const mtrLinesapi = {
       "TWL": []
