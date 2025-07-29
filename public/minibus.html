@@ -12,8 +12,15 @@
     <button id="theme-toggle-button" class="large-button" style="background-color: #ff8d21; color: black; font-size: 1rem; padding: 0.5rem; margin-top: 1rem;">切換主題</button>
     <p>請輸入專線小巴站牌編號以查詢即時抵達時間。</p>
 
-    <label for="stop-id-input">站牌編號（Stop ID）</label>
-    <input type="text" id="stop-id-input" aria-label="輸入小巴站牌編號" placeholder="例如：1001" />
+    <label for="stop-id-input">小巴站</label>
+    <select id="stop-id-input" aria-label="選擇小巴站名稱">
+      <option value="">請選擇一個站牌</option>
+      <option value="mong_kok">旺角</option>
+      <option value="tsim_sha_tsui">尖沙咀</option>
+      <option value="central">中環</option>
+      <option value="causeway_bay">銅鑼灣</option>
+      <option value="shatin">沙田</option>
+    </select>
 
     <!-- Cantonese Speech to Text Section -->
     <label for="speech-textarea">語音文字輸出</label>
