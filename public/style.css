@@ -143,6 +143,53 @@ body:not(.dark-mode) select {
 }
 
 /* Adjustments for textarea specifically if needed, but keeping it general for now */
+/* Styles for MTR schedule list */
+#schedule-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+#schedule-list li {
+  background-color: #f0f0f0; /* Light gray for light mode */
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  text-align: left; /* Align text to the left within the list item */
+}
+
+.dark-mode #schedule-list li {
+  background-color: #333; /* Darker gray for dark mode */
+  border-color: #555; /* Darker border for dark mode */
+}
+
+#schedule-list b {
+  display: block;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  color: #8a2be2; /* Purple accent for headings */
+}
+
+/* Styles for MTR schedule list container */
+#schedule-list {
+  margin-top: 2rem; /* Add some space above the schedule list */
+  padding: 1.5rem; /* Padding inside the box */
+  border: 2px solid #9370db; /* Purple border, consistent with other elements */
+  border-radius: 15px; /* Rounded corners */
+  background-color: #f9f9f9; /* Light background for the box */
+  text-align: center; /* Center align content within the box */
+}
+
+.dark-mode #schedule-list {
+  border-color: #8a2be2; /* Purple border for dark mode */
+  background-color: #2a2a2a; /* Darker background for dark mode */
+}
+
+/* Ensure text alignment is left for list items */
+#schedule-list li {
+  text-align: left;
+}
 textarea {
   resize: vertical; /* Allow vertical resizing */
 }
