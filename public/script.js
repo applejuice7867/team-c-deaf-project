@@ -30,13 +30,13 @@ themeToggleBtn?.addEventListener('click', () => {
 setTheme(localStorage.getItem('theme') || 'light');
 
 document.getElementById('btn-mtr')?.addEventListener('click', () => {
-  window.location.href = '/home/applejuice/team-c-deaf-project/public/mtr.html';
+  window.location.href = '/public/mtr.html';
 });
 document.getElementById('btn-minibus')?.addEventListener('click', () => {
-  window.location.href = '/home/applejuice/team-c-deaf-project/public/minibus.html';
+  window.location.href = '/public/minibus.html';
 });
 document.getElementById('btn-bus')?.addEventListener('click', () => {
-  window.location.href = '/home/applejuice/team-c-deaf-project/public/bus.html';
+  window.location.href = '/public/bus.html';
 });
 
 
@@ -445,32 +445,68 @@ window.addEventListener('DOMContentLoaded', () => {
   function formatTrainInfo(train) {
     if (!train) return 'N/A';
     const destination = train.dest || '未知目的地';
-    const time = train.time || '未知時間';
-    const type = train.type ? ` (${train.type})` : '';
-    return `往 ${destination}${type} - ${time}`;
+    
+    let timeString = '未知時間';
+    if (train.time) {
+      try {
+        // The API returns "YYYY-MM-DD HH:MM:SS"
+        // We need to parse this and format it.
+        // For simplicity, let's just extract HH:MM
+        const timeParts = train.time.split(' ')[1]; // Get "HH:MM:SS"
+        if (timeParts) {
+          timeString = timeParts.substring(0, 5); // Get "HH:MM"
+        }
+      } catch (e) {
+        console.error("Error parsing train time:", train.time, e);
+        timeString = '時間格式錯誤';
+      }
+    }
+    
+    // The 'type' field is missing in the API response, so we can omit it or handle it.
+    // For now, let's just display destination and time.
+    return `往 ${destination} - ${timeString}`;
   }
 
   if (fetchScheduleButtonMTR) {
     fetchScheduleButtonMTR.onclick = async () => {
       const selectedLineName = lineSelectMTR.value;
       const stationName = stationSelectMTR.value;
-      if (!selectedLineName || !stationName) return;
+
+      // --- Validation ---
+      if (!selectedLineName || !stationName) {
+        // If either is empty, ensure the button is disabled and return
+        if (fetchScheduleButtonMTR) fetchScheduleButtonMTR.disabled = true;
+        if (errorElMTR) errorElMTR.style.display = 'none';
+        if (scheduleListElMTR) scheduleListElMTR.innerHTML = '';
+        return;
+      }
+
+      const lineCode = mtrLineCodeMap[selectedLineName];
+      // Check if lineCode is valid before proceeding
+      if (!lineCode) {
+        if (errorElMTR) {
+          errorElMTR.style.display = 'block';
+          errorElMTR.textContent = "無效的路綫選擇";
+        }
+        if (fetchScheduleButtonMTR) fetchScheduleButtonMTR.disabled = true;
+        return;
+      }
+
+      const stationCode = mtrStationCodeMap[lineCode] ? mtrStationCodeMap[lineCode][stationName] : null;
+      // Check if stationCode is valid
+      if (!stationCode) {
+        if (errorElMTR) {
+          errorElMTR.style.display = 'block';
+          errorElMTR.textContent = "無效的車站選擇";
+        }
+        if (fetchScheduleButtonMTR) fetchScheduleButtonMTR.disabled = true;
+        return;
+      }
+      // --- End Validation ---
 
       if (loadingElMTR) loadingElMTR.style.display = 'block';
       if (errorElMTR) errorElMTR.style.display = 'none';
       if (scheduleListElMTR) scheduleListElMTR.innerHTML = '';
-
-      const lineCode = mtrLineCodeMap[selectedLineName];
-      const stationCode = lineCode && mtrStationCodeMap[lineCode] ? mtrStationCodeMap[lineCode][stationName] : null;
-
-      if (!lineCode || !stationCode) {
-        if (loadingElMTR) loadingElMTR.style.display = 'none';
-        if (errorElMTR) {
-          errorElMTR.style.display = 'block';
-          errorElMTR.textContent = "無效的路綫或車站代碼";
-        }
-        return;
-      }
 
       try {
         const apiUrl = `https://rt.data.gov.hk/v1/transport/mtr/getSchedule.php?line=${lineCode}&sta=${stationCode}&lang=EN`;
@@ -479,6 +515,10 @@ window.addEventListener('DOMContentLoaded', () => {
           throw new Error(`服務暫時不可用，請稍後再試 (Status: ${response.status})`);
         }
         const data = await response.json();
+
+        console.log("MTR API Response Data:", data); // Log the entire response
+        console.log("MTR UP data:", data.UP); // Log UP data
+        console.log("MTR DOWN data:", data.DOWN); // Log DOWN data
 
         if (loadingElMTR) loadingElMTR.style.display = 'none';
 
@@ -490,22 +530,29 @@ window.addEventListener('DOMContentLoaded', () => {
           return;
         }
 
+        const lineCodeForDataKey = mtrLineCodeMap[selectedLineName]; // Re-get lineCode for dataKey construction
+        const stationCodeForDataKey = lineCodeForDataKey && mtrStationCodeMap[lineCodeForDataKey] ? mtrStationCodeMap[lineCodeForDataKey][stationName] : null; // Re-get stationCode for dataKey construction
+        const dataKey = `${lineCodeForDataKey}-${stationCodeForDataKey}`;
+        const stationData = data.data ? data.data[dataKey] : null;
+
         const trainsDisplay = [];
 
-        if (data.UP && data.UP.length > 0) {
-          trainsDisplay.push("<b>往市區方向列車：</b><ul>");
-          data.UP.slice(0, 4).forEach(train => {
-            trainsDisplay.push(`<li>${formatTrainInfo(train)}</li>`);
-          });
-          trainsDisplay.push("</ul>");
-        }
+        if (stationData) {
+          if (stationData.UP && stationData.UP.length > 0) {
+            trainsDisplay.push("<b>往市區方向列車：</b><ul>");
+            stationData.UP.slice(0, 4).forEach(train => {
+              trainsDisplay.push(`<li>${formatTrainInfo(train)}</li>`);
+            });
+            trainsDisplay.push("</ul>");
+          }
 
-        if (data.DOWN && data.DOWN.length > 0) {
-          trainsDisplay.push("<b>往新界方向列車：</b><ul>");
-          data.DOWN.slice(0, 4).forEach(train => {
-            trainsDisplay.push(`<li>${formatTrainInfo(train)}</li>`);
-          });
-          trainsDisplay.push("</ul>");
+          if (stationData.DOWN && stationData.DOWN.length > 0) {
+            trainsDisplay.push("<b>往新界方向列車：</b><ul>");
+            stationData.DOWN.slice(0, 4).forEach(train => {
+              trainsDisplay.push(`<li>${formatTrainInfo(train)}</li>`);
+            });
+            trainsDisplay.push("</ul>");
+          }
         }
 
         if (trainsDisplay.length === 0) {
