@@ -15,11 +15,14 @@
     <label for="stop-id-input">小巴站</label>
     <select id="stop-id-input" aria-label="選擇小巴站名稱">
       <option value="">請選擇一個站牌</option>
-      <option value="mong_kok">旺角</option>
+      <option value="20003337">旺角</option>
       <option value="tsim_sha_tsui">尖沙咀</option>
       <option value="central">中環</option>
       <option value="causeway_bay">銅鑼灣</option>
       <option value="shatin">沙田</option>
+      <option value="dummy_stop_1">堅尼地城站</option>
+      <option value="dummy_stop_2">數碼港公共運輸交匯處</option>
+      <option value="dummy_stop_3">貝璐道</option>
     </select>
 
     <!-- Cantonese Speech to Text Section -->
@@ -32,7 +35,7 @@
     <div id="loading" style="display:none;">載入中…</div>
     <div id="error" style="display:none;"></div>
 
-    <div id="schedule-list"></div>
+    <div id="schedule-list" aria-live="polite" aria-label="小巴到站時間列表" readonly rows="10"></div>
 
     <button id="btn-home" class="large-button" style="margin-top: 2.3rem;">返回</button>
   </main>

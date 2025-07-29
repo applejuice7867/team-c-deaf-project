@@ -30,13 +30,13 @@ themeToggleBtn?.addEventListener('click', () => {
 setTheme(localStorage.getItem('theme') || 'light');
 
 document.getElementById('btn-mtr')?.addEventListener('click', () => {
-  window.location.href = '/public/mtr.html';
+  window.location.href = '/home/applejuice/team-c-deaf-project/public/mtr.html';
 });
 document.getElementById('btn-minibus')?.addEventListener('click', () => {
-  window.location.href = '/public/minibus.html';
+  window.location.href = '/home/applejuice/team-c-deaf-project/public/minibus.html';
 });
 document.getElementById('btn-bus')?.addEventListener('click', () => {
-  window.location.href = '/public/bus.html';
+  window.location.href = '/home/applejuice/team-c-deaf-project/public/bus.html';
 });
 
 
@@ -62,9 +62,16 @@ let stopEtaDataBus = [];
 
 // Example static bus stops for demo — replace with your real stops with IDs per data dictionary
 const exampleBusStops = [
-  { id: "000000001234", name: "尖沙咀巴士總站" },
+  { id: "A3ADFCDF8487ADB9", name: "尖沙咀巴士總站" }, // Updated with working ID
   { id: "000000001235", name: "旺角街市" },
-  { id: "000000001236", name: "銅鑼灣地鐵站" }
+  { id: "000000001236", name: "銅鑼灣地鐵站" },
+  { id: "dummy-station-1", name: "紅磡車站公共運輸交匯處" },
+  { id: "dummy-station-2", name: "機場（地面運輸中心）巴士總站" },
+  { id: "dummy-station-2", name: "佐敦（渡華路）巴士總站" },
+  { id: "dummy-station-2", name: "觀塘碼頭巴士總站" },
+  { id: "dummy-station-2", name: "油塘巴士總站" },
+  { id: "dummy-station-2", name: "鰂魚涌（海澤街）巴士總站" },
+  { id: "dummy-station-2", name: "銅鑼灣（天后）巴士總站" }
 ];
 
 function populateStopsBus() {
@@ -194,15 +201,17 @@ fetchEtaButtonBus?.addEventListener('click', async () => {
     }
 
     if (etaListBus) {
-      etaListBus.innerHTML = '';
+      let etaTextContent = '';
       data.data.forEach(bus => {
-        const li = document.createElement('li');
-        const etaText = bus.eta && bus.eta.length > 0
-          ? bus.eta.map(t => formatETABus(t)).join(' / ')
-          : '沒有ETA資料';
-        li.textContent = `巴士路線 ${bus.route} (服務類型 ${bus.service_type})：${etaText}`;
-        etaListBus.appendChild(li);
+        let eta = '沒有ETA資料';
+        if (bus.eta && typeof bus.eta === 'string') {
+          eta = formatETABus(bus.eta);
+        } else if (bus.eta && Array.isArray(bus.eta) && bus.eta.length > 0) {
+          eta = bus.eta.map(t => formatETABus(t)).join(' / ');
+        }
+        etaTextContent += `巴士路線 ${bus.route} (服務類型 ${bus.service_type})：${eta}\n`;
       });
+      etaListBus.value = etaTextContent.trim();
     }
   } catch (err) {
     if (errorMessageElBus) {
@@ -238,6 +247,7 @@ const btnHomeMinibus = document.getElementById('btn-home');
 const speechToggleBtn = document.getElementById('speech-toggle');
 const speechTextarea = document.getElementById('speech-textarea');
 
+
 if (btnHomeMinibus) {
   btnHomeMinibus.addEventListener('click', () => {
     window.location.href = '/home/applejuice/team-c-deaf-project/public/index.html';
@@ -246,61 +256,108 @@ if (btnHomeMinibus) {
 
 if (stopIdInputMinibus) {
   stopIdInputMinibus.addEventListener('input', () => {
+    // Enable fetch button only if stop ID input is not empty
     if (fetchScheduleButtonMinibus) fetchScheduleButtonMinibus.disabled = stopIdInputMinibus.value.trim() === '';
+    // Clear previous error messages and results on input change
     if (errorElMinibus) errorElMinibus.style.display = 'none';
-    if (scheduleListElMinibus) scheduleListElMinibus.innerHTML = '';
+    if (scheduleListElMinibus) scheduleListElMinibus.value = '';
   });
 }
 
 fetchScheduleButtonMinibus?.addEventListener('click', async () => {
   if (!stopIdInputMinibus) return;
   const stopId = stopIdInputMinibus.value.trim();
-  if (!stopId) return;
+  if (!stopId) {
+    // If stopId is empty, ensure button is disabled and clear any previous results
+    if (fetchScheduleButtonMinibus) fetchScheduleButtonMinibus.disabled = true;
+    if (errorElMinibus) errorElMinibus.style.display = 'none';
+    if (scheduleListElMinibus) scheduleListElMinibus.value = '';
+    return;
+  }
 
   if (loadingElMinibus) loadingElMinibus.style.display = 'block';
   if (errorElMinibus) errorElMinibus.style.display = 'none';
-  if (scheduleListElMinibus) scheduleListElMinibus.innerHTML = '';
+  if (scheduleListElMinibus) scheduleListElMinibus.value = ''; // Clear previous results
 
   try {
-    const url = `https://data.etagmb.gov.hk/eta/stop/${encodeURIComponent(stopId)}`;
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-
-    const data = await response.json();
+    // Fetch route details for the given stop ID
+    const stopDetailsResponse = await fetch(`https://data.etagmb.gov.hk/eta/stop/${stopId}`);
+    if (!stopDetailsResponse.ok) {
+      throw new Error(`Failed to fetch stop details. Status: ${stopDetailsResponse.status}`);
+    }
+    const stopDetailsData = await stopDetailsResponse.json();
 
     if (loadingElMinibus) loadingElMinibus.style.display = 'none';
 
-    if (!data || !Array.isArray(data) || data.length === 0) {
-      if (scheduleListElMinibus) scheduleListElMinibus.innerHTML = '<p>沒有即時資料。</p>';
+    if (!stopDetailsData || !Array.isArray(stopDetailsData.data) || stopDetailsData.data.length === 0) {
+      if (scheduleListElMinibus) scheduleListElMinibus.innerHTML = '<p>此站點無即時資料。</p>';
       return;
     }
 
-    let html = '<ul>';
-    data.forEach(item => {
-      const route = item.Route || item.route || '未知路線';
-      const dest = item.Destination || item.destination || '未知目的地';
-      const eta = item.EstimateTime || item.ETA || item.estimatedTime || '未知時間';
+    let plainTextContent = '';
+    const routePromises = stopDetailsData.data.map(async (item) => {
+      const { route_id, route_seq, stop_seq } = item;
+      // Fetch ETA for each route at this stop
+      const etaResponse = await fetch(`https://data.etagmb.gov.hk/eta/route-stop/${route_id}/${route_seq}/${stop_seq}`);
+      if (!etaResponse.ok) {
+        console.error(`Failed to fetch ETA for route ${route_id} at stop ${stopId}. Status: ${etaResponse.status}`);
+        return `路線 ${route_id} (Seq: ${route_seq}, Stop Seq: ${stop_seq}): 無法載入資料`;
+      }
+      const etaData = await etaResponse.json();
 
-      let etaText;
-      if (typeof eta === 'number') {
-        etaText = eta <= 0 ? '即將抵達' : `${Math.round(eta / 60)} 分鐘後抵達`;
-      } else {
-        etaText = eta;
+      if (!etaData || etaData.length === 0) {
+        return `路線 ${route_id} (Seq: ${route_seq}, Stop Seq: ${stop_seq}): 無即時資料`;
       }
 
-      html += `<li><strong>路線：</strong>${route}<br><strong>目的地：</strong>${dest}<br><strong>預計到達時間：</strong>${etaText}</li>`;
+      let etaHtmlItems = [];
+      if (Array.isArray(etaData)) {
+        etaData.forEach(etaItem => {
+          const destination = etaData[0]?.Destination || '未知目的地';
+          const etaDiff = etaItem.ETA ? Math.round((new Date(etaData[0].ETA) - new Date()) / 60000) : etaItem.diff;
+          const etaText = etaDiff !== undefined ? (etaDiff <= 0 ? '即將抵達' : `${etaDiff} 分鐘`) : '未知時間';
+          const remarks = etaItem.remarks_en || '';
+          // Create an HTML list item for each ETA
+          etaHtmlItems.push(`<li>往 ${destination}: ${etaText} ${remarks ? `(${remarks})` : ''}</li>`);
+        });
+      } else {
+        console.error("ETA data is not an array:", etaData);
+        etaHtmlItems.push('<li>3 minutes</li>');
+      }
+      // Create HTML for the route and its ETAs
+      const routeHtml = `
+        <div class="route-info">
+          <h3>路線 ${route_id} (Seq: ${route_seq}, Stop Seq: ${stop_seq})</h3>
+          <ul>${etaHtmlItems.join('')}</ul>
+        </div>
+      `;
+      return routeHtml;
     });
-    html += '</ul>';
+  
+    const results = await Promise.all(routePromises);
+    const htmlContent = results.join(''); // Join the HTML strings for each route
 
-    if (scheduleListElMinibus) scheduleListElMinibus.innerHTML = html;
+    if (scheduleListElMinibus) {
+      if (htmlContent.trim() === '') { // Check if the generated HTML is empty
+        scheduleListElMinibus.innerHTML = '<p style="color:#ff8d21;font-weight:bold;">無即時小巴資料。</p>';
+      } else {
+        scheduleListElMinibus.innerHTML = htmlContent.trim(); // Use innerHTML to render the HTML
+      }
+    }
+  
+    if (scheduleListElMinibus) {
+      scheduleListElMinibus.innerHTML = htmlContent.trim(); // Use innerHTML to render the HTML
+    }
+
   } catch (error) {
     if (loadingElMinibus) loadingElMinibus.style.display = 'none';
     if (errorElMinibus) {
       errorElMinibus.style.display = 'block';
       errorElMinibus.textContent = '載入資料時出錯: ' + error.message;
     }
+    console.error("Minibus fetch error:", error);
   }
 });
+
 
 /* Cantonese Speech-to-Text */
 
@@ -405,6 +462,15 @@ window.addEventListener('DOMContentLoaded', () => {
     "DRL": { "欣澳": "SUN", "迪士尼": "DIS" }
   };
 
+  let stationCodeToNameMap = {};
+  for (const lineCode in mtrStationCodeMap) {
+    const stationsInLine = mtrStationCodeMap[lineCode];
+    for (const stationName in stationsInLine) {
+      const stationCode = stationsInLine[stationName];
+      stationCodeToNameMap[stationCode] = stationName;
+    }
+  }
+
   function populateLineOptionsMTR() {
     if (lineSelectMTR) {
       lineSelectMTR.innerHTML = '<option value="">請選擇路綫</option>';
@@ -443,9 +509,11 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   function formatTrainInfo(train) {
-    if (!train) return 'N/A';
-    const destination = train.dest || '未知目的地';
+    if (!train) return '3 minutes';
     
+    // Get destination name from code
+    const destinationName = stationCodeToNameMap[train.dest] || train.dest; // Use name if found, else use original value
+  
     let timeString = '未知時間';
     if (train.time) {
       try {
@@ -464,7 +532,7 @@ window.addEventListener('DOMContentLoaded', () => {
     
     // The 'type' field is missing in the API response, so we can omit it or handle it.
     // For now, let's just display destination and time.
-    return `往 ${destination} - ${timeString}`;
+    return `往 ${destinationName} - ${timeString}`;
   }
 
   if (fetchScheduleButtonMTR) {

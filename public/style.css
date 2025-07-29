@@ -146,3 +146,32 @@ body:not(.dark-mode) select {
 textarea {
   resize: vertical; /* Allow vertical resizing */
 }
+#etaListBus {
+  border: 2px solid #ff8d21; /* Orange border */
+  border-radius: 15px; /* Rounded corners */
+  padding: 1.2rem; /* Padding inside the box */
+  margin-bottom: 1rem; /* Spacing below the box */
+  background-color: #f9f9f9; /* Light background */
+  text-align: left; /* Align text within the box */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Adjustments for dark mode */
+.dark-mode #etaListBus {
+  border-color: #9370db; /* Purple border in dark mode */
+  background-color: #2a2a2a; /* Darker background */
+  color: #e0e0e0; /* Light text */
+}
+
+/* Ensure list items within the bus ETA box are styled appropriately */
+#etaListBus ul {
+  list-style-type: none; /* Remove default list bullets */
+  padding: 0;
+  margin: 0;
+}
+
+#etaListBus li {
+  margin-bottom: 0.8rem; /* Spacing between list items */
+  font-size: 1.2rem; /* Slightly smaller font for list items */
+  line-height: 1.5;
+}
