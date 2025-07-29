@@ -645,7 +645,7 @@ if (fetchScheduleButtonMTR) {
     }
 
     try {
-      const apiUrl = `https://rt.data.gov.hk/v1/transport/mtr/nextTrain?line=${lineCode}&sta=${stationCode}&lang=EN`;
+      const apiUrl = `https://rt.data.gov.hk/v1/transport/mtr/getSchedule.php?line=${lineCode}&sta=${stationCode}&lang=EN`;
       const response = await fetch(apiUrl);
       if (!response.ok) throw new Error("服務暫時不可用，請稍後再試");
       const data = await response.json();
