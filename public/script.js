@@ -45,6 +45,7 @@ document.getElementById('btn-bus')?.addEventListener('click', () => {
   window.location.href = '/home/applejuice/team-c-deaf-project/public/bus.html';
 });
 
+
 // --- Bus Page JavaScript (from public/bus.html) ---
 console.log("Bus page script loaded"); // For debugging
 
@@ -65,11 +66,7 @@ const etaListBus = document.getElementById('eta-list');
 
 let stopEtaDataBus = []; // to store fetched route and service type data for selected stop
 
-// This function fetches a list of bus stops to populate the stop dropdown.
-// Since the API does not provide an endpoint to list stops, you will need to provide a static list or implement a static list here.
-// For demonstration, an example static list of several bus stops is added below.
-// You should update this with real bus stop IDs and names relevant to your users.
-
+// Example static list of bus stops - update with real data if available
 const exampleBusStops = [
   { id: "000000001234", name: "尖沙咀巴士總站" },
   { id: "000000001235", name: "旺角街市" },
@@ -87,7 +84,6 @@ function populateStopsBus() {
     });
   }
 }
-
 populateStopsBus();
 
 // When a stop is selected, fetch available bus routes and service types for that stop
@@ -309,7 +305,6 @@ if (fetchScheduleButtonMinibus) {
 
     try {
       const url = `https://data.etagmb.gov.hk/eta/stop/${encodeURIComponent(stopId)}`;
-
       const response = await fetch(url);
       if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
@@ -348,8 +343,10 @@ if (fetchScheduleButtonMinibus) {
 
     } catch (error) {
       if (loadingElMinibus) loadingElMinibus.style.display = 'none';
-      if (errorElMinibus) errorElMinibus.style.display = 'block';
-      if (errorElMinibus) errorElMinibus.textContent = '載入資料時出錯: ' + error.message;
+      if (errorElMinibus) {
+        errorElMinibus.style.display = 'block';
+        errorElMinibus.textContent = '載入資料時出錯: ' + error.message;
+      }
     }
   });
 }
@@ -358,8 +355,8 @@ if (fetchScheduleButtonMinibus) {
 /* Cantonese Speech-to-Text */
 /* ----------------------- */
 
-let recognitionMinibus; // Renamed to avoid collision
-let recognizingMinibus = false; // Renamed to avoid collision
+let recognitionMinibus; 
+let recognizingMinibus = false; 
 
 // Check for browser support
 if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
@@ -432,39 +429,182 @@ const loadingElMTR = document.getElementById('loading');
 const errorElMTR = document.getElementById('error');
 const scheduleListElMTR = document.getElementById('schedule-list');
 
-// Static route and station data for MTR
-const mtrLinesData = {
-  "荃灣綫": ["中環", "金鐘", "旺角", "荃灣", "尖沙咀", "佐敦", "油麻地", "太子", "深水埗", "長沙灣", "荔枝角", "美孚", "荔景", "葵芳", "葵興", "大窩口"],
-  "港島綫": ["上環", "中環", "銅鑼灣", "柴灣", "杏花邨", "筲箕灣", "西灣河", "太古", "鰂魚涌", "北角", "炮台山", "天后", "灣仔", "金鐘", "西營盤", "香港大學", "堅尼地城"],
-  "東鐵綫": ["落馬洲", "羅湖", "上水", "粉嶺", "太和", "大埔墟", "大學", "馬場", "火炭", "沙田", "大圍", "九龍塘", "旺角東", "紅磡", "會展", "金鐘"],
-  "將軍澳綫": ["將軍澳", "坑口", "寶琳", "調景嶺", "油塘", "鰂魚涌", "北角", "康城"],
-  "東涌綫": ["東涌", "欣澳", "青衣", "荔景", "南昌", "奧運", "九龍", "香港"],
-  "機場快綫": ["香港", "九龍", "青衣", "機場", "博覽館"],
-  "屯馬綫": ["烏溪沙", "馬鞍山", "恆安", "大水坑", "石門", "第一城", "沙田圍", "車公廟", "大圍" ,"顯徑", "鑽石山", "啟德", "宋皇臺", "土瓜灣", "何文田", "紅磡", "尖東", "柯士甸", "南昌", "美孚", "荃灣西", "錦上路", "元朗", "朗屏", "天水圍", "兆康", "屯門"],
-  "迪士尼綫": ["欣澳", "迪士尼"],
-  "觀塘綫": ["黃埔", "何文田", "油麻地", "旺角", "太子", "石硤尾", "九龍塘", "樂富", "黃大仙", "鑽石山", "彩虹", "九龍灣", "牛頭角", "觀塘", "藍田", "油塘", "調景嶺"],
-  "南港島綫": ["金鐘", "海洋公園", "黃竹坑", "利東", "海怡半島"]
+// Mapping from display line names (Chinese) to API line codes
+const mtrLineCodeMap = {
+  "機場快綫": "AEL",
+  "東涌綫": "TCL",
+  "屯馬綫": "TML",
+  "將軍澳綫": "TKL",
+  "東鐵綫": "EAL",
+  "南港島綫": "SIL",
+  "荃灣綫": "TWL",
+  "港島綫": "ISL",
+  "觀塘綫": "KTL",
+  "迪士尼綫": "DRL",
 };
 
+// Complete mapping station names per line to station codes from Data Dictionary v1.7
+
+const mtrStationCodeMap = {
+  "AEL": { // Airport Express Line
+    "香港": "HOK",
+    "九龍": "KOW",
+    "青衣": "TSY",
+    "機場": "AIR",
+    "博覽館": "AWE"
+  },
+  "TCL": { // Tung Chung Line
+    "東涌": "TUC",
+    "欣澳": "SUN",
+    "青衣": "TSY",
+    "荔景": "LCK",
+    "南昌": "LAK",
+    "奧運": "OLY",
+    "九龍": "KOW",
+    "香港": "HOK"
+  },
+  "TML": { // Tuen Ma Line
+    "屯門": "TUM",
+    "兆康": "SIA",
+    "天水圍": "TIS",
+    "朗屏": "LOP",
+    "元朗": "YUL",
+    "錦上路": "KIS",
+    "荃灣西": "TWW",
+    "美孚": "MEF",
+    "荔景": "LCK",
+    "太子": "PRE",
+    "何文田": "HOM",
+    "紅磡": "HUH",
+    "宋皇臺": "SHT",
+    "啟德": "KTE",
+    "鑽石山": "DIH",
+    "顯徑": "HIN",
+    "大圍": "TAW",
+    "沙田圍": "STW",
+    "車公廟": "CMT",
+    "石門": "SIM",
+    "大水坑": "TWW",
+    "恆安": "HNG",
+    "馬鞍山": "MOS",
+    "烏溪沙": "WKS"
+  },
+  "TKL": { // Tseung Kwan O Line
+    "將軍澳": "TKO",
+    "寶琳": "POA",
+    "康城": "LHP",
+    "調景嶺": "TIK",
+    "油塘": "YAT",
+    "鰂魚涌": "QUB",
+    "北角": "NOP"
+  },
+  "EAL": { // East Rail Line
+    "羅湖": "LMC",
+    "落馬洲": "LOW",
+    "上水": "SHS",
+    "粉嶺": "FLN",
+    "太和": "TAH",
+    "大埔墟": "TAP",
+    "大學": "UNI",
+    "馬場": "RAC",
+    "火炭": "FOT",
+    "沙田": "SHT",
+    "大圍": "TAW",
+    "九龍塘": "KOT",
+    "旺角東": "MKK",
+    "紅磡": "HUH",
+    "會展": "EXC",
+    "金鐘": "ADM"
+  },
+  "SIL": { // South Island Line
+    "金鐘": "ADM",
+    "海洋公園": "OCP",
+    "黃竹坑": "WCH",
+    "利東": "LET",
+    "海怡半島": "SOH"
+  },
+  "TWL": { // Tsuen Wan Line
+    "荃灣": "TSW",
+    "大窩口": "TWH",
+    "葵興": "KWH",
+    "葵芳": "KWF",
+    "美孚": "MEF",
+    "荔枝角": "LCK",
+    "長沙灣": "CSW",
+    "深水埗": "SSP",
+    "太子": "PRE",
+    "旺角": "MOK",
+    "油麻地": "YMT",
+    "佐敦": "JOR",
+    "尖沙咀": "TST",
+    "金鐘": "ADM",
+    "中環": "CEN"
+  },
+  "ISL": { // Island Line
+    "柴灣": "CHW",
+    "杏花邨": "HFC",
+    "筲箕灣": "SKW",
+    "西灣河": "SWH",
+    "太古": "TAK",
+    "鰂魚涌": "QUB",
+    "北角": "NOP",
+    "炮台山": "FOH",
+    "天后": "TIH",
+    "銅鑼灣": "CAB",
+    "灣仔": "WAC",
+    "金鐘": "ADM",
+    "中環": "CEN",
+    "上環": "SHW",
+    "香港大學": "HKU",
+    "西營盤": "SYP",
+    "堅尼地城": "KET"
+  },
+  "KTL": { // Kwun Tong Line
+    "觀塘": "KWT",
+    "牛頭角": "NTK",
+    "九龍灣": "KOB",
+    "彩虹": "CHH",
+    "鑽石山": "DIH",
+    "黃大仙": "WTS",
+    "樂富": "LOF",
+    "九龍塘": "KOT",
+    "石硤尾": "SKM",
+    "太子": "PRE",
+    "旺角": "MOK",
+    "油麻地": "YMT",
+    "何文田": "HOM",
+    "黃埔": "WHA"
+  },
+  "DRL": { // Disneyland Resort Line
+    "欣澳": "SUN",
+    "迪士尼": "DIS"
+  }
+};
+
+// Populate line options on page load
 function populateLineOptionsMTR() {
   if (lineSelectMTR) {
-    for (const line in mtrLinesData) {
-      const o = document.createElement('option');
-      o.value = line;
-      o.textContent = line;
-      lineSelectMTR.appendChild(o);
+    lineSelectMTR.innerHTML = '<option value="">請選擇路綫</option>';
+    for (const lineName in mtrLineCodeMap) {
+      const option = document.createElement('option');
+      option.value = lineName;
+      option.textContent = lineName;
+      lineSelectMTR.appendChild(option);
     }
   }
 }
 
+// Populate stations when line changes
 if (lineSelectMTR) {
   lineSelectMTR.onchange = () => {
-    const stations = mtrLinesData[lineSelectMTR.value] || [];
+    const selectedLineName = lineSelectMTR.value;
+    const lineCode = mtrLineCodeMap[selectedLineName];
+    const stations = lineCode && mtrStationCodeMap[lineCode] ? Object.keys(mtrStationCodeMap[lineCode]) : [];
+
     if (stationSelectMTR) {
-      stationSelectMTR.innerHTML = stations.length ?
-        '<option value="">請選擇車站</option>' +
-        stations.map(s => `<option>${s}</option>`).join("") :
-        '<option value="">請先選擇路綫</option>';
+      stationSelectMTR.innerHTML = stations.length
+        ? '<option value="">請選擇車站</option>' + stations.map(s => `<option>${s}</option>`).join("")
+        : '<option value="">請先選擇路綫</option>';
       stationSelectMTR.disabled = !stations.length;
     }
     if (fetchScheduleButtonMTR) fetchScheduleButtonMTR.disabled = true;
@@ -473,6 +613,7 @@ if (lineSelectMTR) {
   };
 }
 
+// Enable fetch button when station selected
 if (stationSelectMTR) {
   stationSelectMTR.onchange = () => {
     if (fetchScheduleButtonMTR) fetchScheduleButtonMTR.disabled = !stationSelectMTR.value;
@@ -481,35 +622,83 @@ if (stationSelectMTR) {
   };
 }
 
+// Fetch and display next train info from Next Train API
 if (fetchScheduleButtonMTR) {
   fetchScheduleButtonMTR.onclick = async () => {
-    const line = lineSelectMTR.value;
-    const station = stationSelectMTR.value;
+    const selectedLineName = lineSelectMTR.value;
+    const stationName = stationSelectMTR.value;
+    if (!selectedLineName || !stationName) return;
     if (loadingElMTR) loadingElMTR.style.display = "block";
     if (errorElMTR) errorElMTR.style.display = "none";
     if (scheduleListElMTR) scheduleListElMTR.innerHTML = "";
-    try {
-      const url = `https://rt.data.gov.hk/v1/transport/mtr/getSchedule.php?line=${encodeURIComponent(line)}&station=${encodeURIComponent(station)}`;
-      const resp = await fetch(url);
-      const data = await resp.json();
+
+    const lineCode = mtrLineCodeMap[selectedLineName];
+    const stationCode = lineCode && mtrStationCodeMap[lineCode] ? mtrStationCodeMap[lineCode][stationName] : null;
+
+    if (!lineCode || !stationCode) {
       if (loadingElMTR) loadingElMTR.style.display = "none";
-      if (data.resultCode !== 0) {
-        if (errorElMTR) errorElMTR.style.display = "block";
-        if (errorElMTR) errorElMTR.textContent = data.message || "無法取得資料";
+      if (errorElMTR) {
+        errorElMTR.style.display = "block";
+        errorElMTR.textContent = "無效的路綫或車站代碼";
+      }
+      return;
+    }
+
+    try {
+      const apiUrl = `https://rt.data.gov.hk/v1/transport/mtr/nextTrain?line=${lineCode}&sta=${stationCode}&lang=EN`;
+      const response = await fetch(apiUrl);
+      if (!response.ok) throw new Error("服務暫時不可用，請稍後再試");
+      const data = await response.json();
+
+      if (loadingElMTR) loadingElMTR.style.display = "none";
+
+      if (data.status !== 1 || (!data.UP && !data.DOWN)) {
+        if (errorElMTR) {
+          errorElMTR.style.display = "block";
+          errorElMTR.textContent = data.message || "無法取得列車資料";
+        }
         return;
       }
-      const schedules = data.Schedules || data.Schedule || [];
-      if (scheduleListElMTR) {
-        scheduleListElMTR.innerHTML = schedules.length ? "<ul>" +
-          schedules.map(i => `<li><b>目的地：</b>${i.Destination || '未知'}<br><b>預計到達：</b>${i.ExpectedArrivalTime || '未知'}</li>`).join("")
-          + "</ul>" : "<p>沒有即時資料。</p>";
+
+      const trainsDisplay = [];
+
+      // Helper to format train info
+      function formatTrainInfo(train) {
+        const plat = train.plat ? `月台 ${train.plat}` : '';
+        const time = train.time ? train.time.replace('T', ' ').substring(0, 19) : '未知時間';
+        const dest = train.dest || '';
+        return `${plat} - 目的地: ${dest} - 預計到達時間: ${time}`;
       }
+
+      if (data.UP && data.UP.length > 0) {
+        trainsDisplay.push("<b>往上行方向列車：</b><ul>");
+        data.UP.forEach((train, idx) => {
+          if (idx >= 4) return;
+          trainsDisplay.push(`<li>${formatTrainInfo(train)}</li>`);
+        });
+        trainsDisplay.push("</ul>");
+      }
+
+      if (data.DOWN && data.DOWN.length > 0) {
+        trainsDisplay.push("<b>往下行方向列車：</b><ul>");
+        data.DOWN.forEach((train, idx) => {
+          if (idx >= 4) return;
+          trainsDisplay.push(`<li>${formatTrainInfo(train)}</li>`);
+        });
+        trainsDisplay.push("</ul>");
+      }
+
+      scheduleListElMTR.innerHTML = trainsDisplay.length > 0 ? trainsDisplay.join('') : "<p>沒有即時列車資料。</p>";
+
     } catch (err) {
       if (loadingElMTR) loadingElMTR.style.display = "none";
-      if (errorElMTR) errorElMTR.style.display = "block";
-      if (errorElMTR) errorElMTR.textContent = "載入資料時出錯: " + err.message;
+      if (errorElMTR) {
+        errorElMTR.style.display = "block";
+        errorElMTR.textContent = "載入資料時出錯: " + err.message;
+      }
     }
   };
 }
 
 populateLineOptionsMTR();
+
