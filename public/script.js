@@ -433,6 +433,50 @@ if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) 
       }
     });
   }
+  // --- Text-to-Speech for stt.html ---
+  // Ensure speechTextarea is correctly referenced for stt.html context
+  const sttSpeechTextarea = document.getElementById('speech-textarea');
+  const sttSpeakButton = document.getElementById('btn-speak');
+
+  if (sttSpeakButton && sttSpeechTextarea) {
+    sttSpeakButton.addEventListener('click', () => {
+      const textToSpeak = sttSpeechTextarea.value;
+      if (textToSpeak && 'speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(textToSpeak);
+        utterance.lang = 'yue-Hant-HK'; // Set language to Cantonese
+        utterance.rate = 1; // Speed of speech
+        utterance.pitch = 1; // Pitch of speech
+
+        window.speechSynthesis.speak(utterance);
+      } else if (!('speechSynthesis' in window)) {
+        alert('您的瀏覽器不支援文字轉語音功能。');
+      } else {
+        alert('請先進行語音轉文字，然後再點擊朗讀。');
+      }
+    });
+  }
+
+  // --- Manual Text-to-Speech for stt.html ---
+  const sttTtsInput = document.getElementById('tts-input');
+  const sttSpeakManualButton = document.getElementById('btn-speak-manual');
+
+  if (sttSpeakManualButton && sttTtsInput) {
+    sttSpeakManualButton.addEventListener('click', () => {
+      const textToSpeak = sttTtsInput.value;
+      if (textToSpeak && 'speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(textToSpeak);
+        utterance.lang = 'yue-Hant-HK'; // Set language to Cantonese
+        utterance.rate = 1; // Speed of speech
+        utterance.pitch = 1; // Pitch of speech
+
+        window.speechSynthesis.speak(utterance);
+      } else if (!('speechSynthesis' in window)) {
+        alert('您的瀏覽器不支援文字轉語音功能。');
+      } else {
+        alert('請先在文字輸入框中輸入文字，然後再點擊朗讀。');
+      }
+    });
+  }
 }
 
 
