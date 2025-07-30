@@ -129,6 +129,12 @@ stopSelectBus?.addEventListener('change', async () => {
 
     // Populate routes
     const uniqueRoutes = [...new Set(stopEtaDataBus.map(d => d.route))];
+    uniqueRoutes.push('796C');
+    uniqueRoutes.push('24M');
+    uniqueRoutes.push('96');
+    uniqueRoutes.push('76B');
+    uniqueRoutes.push('26M');
+    uniqueRoutes.push('89A');
     if (routeSelectBus) {
       routeSelectBus.innerHTML = '<option value="">請選擇路線</option>';
       uniqueRoutes.forEach(route => {
