@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>語音轉文字</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <h1>語音轉文字</h1>
+    <label for="speech-textarea">語音文字輸出</label>
+    <textarea id="speech-textarea" rows="4" readonly placeholder="語音轉文字結果會顯示於此..." style="font-size:1.25rem; padding:0.8rem;"></textarea>
+    <button id="speech-toggle" class="large-button">開始聽講話</button>
+    <button id="btn-back-to-index" class="large-button" style="margin-top: 2.3rem;" onclick="window.location.href='index.html'">返回主頁</button>
+  <script>
+    /* Cantonese Speech-to-Text */
+
+    let recognitionMinibus;
+    let recognizingMinibus = false;
+
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      const speechToggleBtn = document.getElementById('speech-toggle');
+      if (speechToggleBtn) {
+        speechToggleBtn.disabled = true;
+        speechToggleBtn.textContent = '瀏覽器不支援語音識別';
+      }
+    } else {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognitionMinibus = new SpeechRecognition();
+
+      recognitionMinibus.lang = 'yue-Hant-HK';
+      recognitionMinibus.continuous = true;
+      recognitionMinibus.interimResults = true;
+
+      recognitionMinibus.onstart = () => {
+        recognizingMinibus = true;
+        const speechToggleBtn = document.getElementById('speech-toggle');
+        if (speechToggleBtn) speechToggleBtn.textContent = '停止聆聽';
+        const errorEl = document.getElementById('error'); // Assuming an error element might be present or added
+        if (errorEl) errorEl.style.display = 'none';
+      };
+
+      recognitionMinibus.onerror = (event) => {
+        console.error('語音識別錯誤:', event.error);
+        if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+          const errorEl = document.getElementById('error');
+          if (errorEl) {
+            errorEl.style.display = 'block';
+            errorEl.textContent = '請允許瀏覽器使用麥克風後再試。';
+          }
+        }
+      };
+
+      recognitionMinibus.onend = () => {
+        recognizingMinibus = false;
+        const speechToggleBtn = document.getElementById('speech-toggle');
+        if (speechToggleBtn) speechToggleBtn.textContent = '開始聽講話';
+      };
+
+      recognitionMinibus.onresult = (event) => {
+        let interimTranscript = '';
+        let finalTranscript = '';
+
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const transcript = event.results[i][0].transcript;
+          if (event.results[i].isFinal) finalTranscript += transcript;
+          else interimTranscript += transcript;
+        }
+        const speechTextarea = document.getElementById('speech-textarea');
+        if (speechTextarea) speechTextarea.value = finalTranscript + interimTranscript;
+      };
+
+      const speechToggleBtn = document.getElementById('speech-toggle');
+      if (speechToggleBtn) {
+        speechToggleBtn.addEventListener('click', () => {
+          if (recognizingMinibus) {
+            recognitionMinibus.stop();
+            recognizingMinibus = false;
+            speechToggleBtn.textContent = '開始聽講話';
+          } else {
+            const speechTextarea = document.getElementById('speech-textarea');
+            if (speechTextarea) speechTextarea.value = '';
+            recognitionMinibus.start();
+          }
+        });
+      }
+    }
+  </script>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

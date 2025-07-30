@@ -39,6 +39,17 @@ document.getElementById('btn-bus')?.addEventListener('click', () => {
   window.location.href = '/home/applejuice/team-c-deaf-project/public/bus.html';
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('btn-back-to-index')?.addEventListener('click', () => {
+    window.location.href = '/home/applejuice/team-c-deaf-project/public/index.html';
+  });
+});
+document.getElementById('btn-stt')?.addEventListener('click', () => {
+  window.location.href = '/home/applejuice/team-c-deaf-project/public/stt.html';
+});
+document.getElementById('btn-stt')?.addEventListener('click', () => {
+  window.location.href = '/home/applejuice/team-c-deaf-project/public/stt.html';
+});
 
 // --- Bus Page JavaScript ---
 console.log("Bus page script loaded");
