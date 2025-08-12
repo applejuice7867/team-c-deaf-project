@@ -30,25 +30,25 @@ themeToggleBtn?.addEventListener('click', () => {
 setTheme(localStorage.getItem('theme') || 'light');
 
 document.getElementById('btn-mtr')?.addEventListener('click', () => {
-  window.location.href = '/home/applejuice/team-c-deaf-project/public/mtr.html';
+  window.location.href = './mtr.html';
 });
 document.getElementById('btn-minibus')?.addEventListener('click', () => {
-  window.location.href = '/home/applejuice/team-c-deaf-project/public/minibus.html';
+  window.location.href = './minibus.html';
 });
 document.getElementById('btn-bus')?.addEventListener('click', () => {
-  window.location.href = '/home/applejuice/team-c-deaf-project/public/bus.html';
+  window.location.href = './bus.html';
 });
 
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-back-to-index')?.addEventListener('click', () => {
-    window.location.href = '/home/applejuice/team-c-deaf-project/public/index.html';
+    window.location.href = './index.html';
   });
 });
 document.getElementById('btn-stt')?.addEventListener('click', () => {
-  window.location.href = '/home/applejuice/team-c-deaf-project/public/stt.html';
+  window.location.href = './stt.html';
 });
 document.getElementById('btn-stt')?.addEventListener('click', () => {
-  window.location.href = '/home/applejuice/team-c-deaf-project/public/stt.html';
+  window.location.href = './stt.html';
 });
 
 // --- Bus Page JavaScript ---
@@ -57,7 +57,7 @@ console.log("Bus page script loaded");
 const backButtonBus = document.getElementById('back-button');
 if (backButtonBus) {
   backButtonBus.addEventListener('click', () => {
-    window.location.href = '/home/applejuice/team-c-deaf-project/public/index.html';
+    window.location.href = './index.html';
   });
 }
 
@@ -267,7 +267,7 @@ const speechTextarea = document.getElementById('speech-textarea');
 
 if (btnHomeMinibus) {
   btnHomeMinibus.addEventListener('click', () => {
-    window.location.href = '/home/applejuice/team-c-deaf-project/public/index.html';
+    window.location.href = './index.html';
   });
 }
 
@@ -659,7 +659,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const btnHomeMTR = document.getElementById('btn-home');
   if (btnHomeMTR) {
     btnHomeMTR.addEventListener('click', () => {
-      window.location.href = '/home/applejuice/team-c-deaf-project/public/index.html';
+      window.location.href = './index.html';
     });
   }
 
