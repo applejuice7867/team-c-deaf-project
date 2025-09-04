@@ -22,7 +22,7 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![GNU GPL][license-shield]][license-url]
+[![GPL-3.0][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 
@@ -85,7 +85,7 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-Here's a blank template to get started. To avoid retyping too much info, do a search and replace with your text editor for the following: `applejuice7867`, `team-c-deaf-project`, `twitter_handle`, `linkedin_username`, `gmail`, `applejuiceprogame`, `Deaf Transportation Aid`, `project_description`, `GNU GPL`
+Here's a blank template to get started. To avoid retyping too much info, do a search and replace with your text editor for the following: `applejuice7867`, `team-c-deaf-project`, `twitter_handle`, `linkedin_username`, `gmail`, `applejuiceprogame`, `Deaf Transportation Aid`, `project_description`, `GPL-3.0`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -197,7 +197,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- LICENSE -->
 ## License
 
-Distributed under the GNU GPL. See `LICENSE.txt` for more information.
+Distributed under the GPL-3.0. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
