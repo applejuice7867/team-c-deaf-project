@@ -94,7 +94,7 @@ The Deaf Transportation Aid by Team C Industries is a application to aid deaf pe
 ### Built With
 
 * [![Node][Node.js]][Node-url]
-* [! [Python][Python][Python-url]]
+* [![Pythonsomething][Python]][Python-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
