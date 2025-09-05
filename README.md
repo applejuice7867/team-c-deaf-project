@@ -206,9 +206,9 @@ Distributed under the GPL-3.0. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Apple juice - applejuiceprogame@gmail.com
-Marcus Ng - sp20246771@spcc.edu.hk
-Bily Wang - s20237044@elearn.hkbuas.edu.hk
+Apple juice - applejuiceprogame@gmail.com  
+Marcus Ng - sp20246771@spcc.edu.hk  
+Bily Wang - s20237044@elearn.hkbuas.edu.hk  
 
 Project Link: [https://github.com/applejuice7867/team-c-deaf-project](https://github.com/applejuice7867/team-c-deaf-project)
 
