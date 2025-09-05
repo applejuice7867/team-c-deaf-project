@@ -219,9 +219,9 @@ Project Link: [https://github.com/applejuice7867/team-c-deaf-project](https://gi
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* [SheDaniel]()
+* [SheDaniel](https://github.com/shedaniel)
 * [Thomas Yip]()
-* [Tom Jong]()
+* [Tom Jong](https://github.com/JYWTom)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -258,3 +258,5 @@ Project Link: [https://github.com/applejuice7867/team-c-deaf-project](https://gi
 [Bootstrap-url]: https://getbootstrap.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
 [JQuery-url]: https://jquery.com 
+[Node-url]: https://nodejs.org/en
+[Node.js]: https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white
