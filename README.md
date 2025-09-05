@@ -85,7 +85,7 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-Here's a blank template to get started. To avoid retyping too much info, do a search and replace with your text editor for the following: `applejuice7867`, `team-c-deaf-project`, `twitter_handle`, `linkedin_username`, `gmail`, `applejuiceprogame`, `Deaf Transportation Aid`, `project_description`, `GPL-3.0`
+The Deaf Transportation Aid by Team C Industries is a application to aid deaf people in navigating the public transportation systems in Hong Kong.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -93,7 +93,7 @@ Here's a blank template to get started. To avoid retyping too much info, do a se
 
 ### Built With
 
-* [![Next][Next.js]][Next-url]
+* [![Node][Node.js]][Node-url]
 * [![React][React.js]][React-url]
 * [![Vue][Vue.js]][Vue-url]
 * [![Angular][Angular.io]][Angular-url]
