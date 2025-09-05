@@ -114,32 +114,21 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
+Chrome is needed as we are currently using speech to text from chrome.  
+* chrome(arch)
   ```sh
-  npm install npm@latest -g
+  yay -S google-chrome
   ```
+* other distributions or operating systems  
+  follow the instructions of your operating system to install google chrome.  
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/applejuice7867/team-c-deaf-project.git
    ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
-5. Change git remote url to avoid accidental pushes to base project
-   ```sh
-   git remote set-url origin applejuice7867/team-c-deaf-project
-   git remote -v # confirm the changes
-   ```
+2. Use
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -148,7 +137,7 @@ This is an example of how to list things you need to use the software and how to
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+As this project is still in early stages without any packages or hosting. Please clone the repo and host it yourself, it should be hosted in about 3 months(expect mobile app before 2026).
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
@@ -159,10 +148,11 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [ ] multi language support
+- [ ] map features
+- [ ] Better translation functions
+    - [ ] text to speech
+    - [ ] multi language support for tts and stt
 
 See the [open issues](https://github.com/applejuice7867/team-c-deaf-project/issues) for a full list of proposed features (and known issues).
 
