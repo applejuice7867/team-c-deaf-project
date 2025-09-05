@@ -1,10 +1,19 @@
 <!DOCTYPE html>
-<html lang="zh-HK">
+<html lang="">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
-<title>港鐵時刻查詢</title>
+<title>港鐵時刻查詢 / MTR Timetable</title>
 <link rel="stylesheet" href="style.css" />
+<script>
+  (function() {
+    document.addEventListener('DOMContentLoaded', function() {
+      const lang = localStorage.getItem('lang') || 'zh-HK';
+      document.body.classList.remove('lang-zh-HK', 'lang-en');
+      document.body.classList.add(lang === 'en' ? 'lang-en' : 'lang-zh-HK');
+    });
+  })();
+</script>
 <style>
 /* Styles for MTR schedule list */
 #schedule-list ul {
@@ -57,24 +66,42 @@
 </head>
 <body>
   <main>
-    <h1>港鐵時刻查詢</h1>
+    <h1>
+      <span class="lang-zh">港鐵時刻查詢</span>
+      <span class="lang-en">MTR Timetable</span>
+    </h1>
     <div class="bottom-nav">
       <button id="nav-home" class="nav-btn" aria-label="主頁"><span style="font-size:2rem;">🏠</span></button>
       <button id="nav-settings" class="nav-btn" aria-label="設定"><img src="../images/setting-icon.png" alt="設定" style="height:32px;width:32px;object-fit:contain;" /></button>
     </div>
-    <label for="line-select">請選擇路綫</label>
+    <label for="line-select">
+      <span class="lang-zh">請選擇路綫</span>
+      <span class="lang-en">Select Line</span>
+    </label>
     <select id="line-select" aria-label="選擇港鐵路綫">
-      <option value="">-- 請選擇路綫 --</option>
+      <option value=""><span class="lang-zh">-- 請選擇路綫 --</span><span class="lang-en">-- Select Line --</span></option>
     </select>
-    <label for="station-select">請選擇車站</label>
+    <label for="station-select">
+      <span class="lang-zh">請選擇車站</span>
+      <span class="lang-en">Select Station</span>
+    </label>
     <select id="station-select" aria-label="選擇港鐵車站" disabled>
-      <option value="">-- 請先選擇路綫 --</option>
+      <option value=""><span class="lang-zh">-- 請先選擇路綫 --</span><span class="lang-en">-- Select Line First --</span></option>
     </select>
-    <button id="fetch-schedule" class="large-button" >查詢時間表</button>
-    <div id="loading" style="display:none;">載入中…</div>
+    <button id="fetch-schedule" class="large-button">
+      <span class="lang-zh">查詢時間表</span>
+      <span class="lang-en">Fetch Schedule</span>
+    </button>
+    <div id="loading" style="display:none;">
+      <span class="lang-zh">載入中…</span>
+      <span class="lang-en">Loading…</span>
+    </div>
     <div id="error" style="display:none;"></div>
     <div id="schedule-list"></div>
-    <button id="btn-home" class="large-button" style="margin-top: 2.3rem;">返回首頁</button>
+    <button id="btn-home" class="large-button" style="margin-top: 2.3rem;">
+      <span class="lang-zh">返回首頁</span>
+      <span class="lang-en">Back to Home</span>
+    </button>
   </main>
   <script src="script.js"></script>
 </body>

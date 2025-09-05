@@ -1,61 +1,81 @@
 <!DOCTYPE html>
-<html lang="zh-HK">
+<html lang="">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>HK Deaf Elderly Transit Aid - Buses</title>
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HK Deaf Elderly Transit Aid - Buses</title>
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    (function() {
+      document.addEventListener('DOMContentLoaded', function() {
+        const lang = localStorage.getItem('lang') || 'zh-HK';
+        document.body.classList.remove('lang-zh-HK', 'lang-en');
+        document.body.classList.add(lang === 'en' ? 'lang-en' : 'lang-zh-HK');
+      });
+    })();
+  </script>
 </head>
 <body>
-
 <main>
-  <h1>九巴到站時間查詢</h1>
-    <div class="bottom-nav">
-      <button id="nav-home" class="nav-btn" aria-label="主頁"><span style="font-size:2rem;">🏠</span></button>
-      <button id="nav-settings" class="nav-btn" aria-label="設定"><img src="../images/setting-icon.png" alt="設定" style="height:32px;width:32px;object-fit:contain;" /></button>
-    </div>
-
-  <div>
+  <h1>
+    <span class="lang-zh">九巴到站時間查詢</span>
+    <span class="lang-en">KMB Bus ETA</span>
+  </h1>
+  <div class="bottom-nav">
+    <button id="nav-home" class="nav-btn" aria-label="主頁"><span style="font-size:2rem;">🏠</span></button>
+    <button id="nav-settings" class="nav-btn" aria-label="設定"><img src="../images/setting-icon.png" alt="設定" style="height:32px;width:32px;object-fit:contain;" /></button>
   </div>
-
+  <div></div>
+  <div></div>
   <div>
-    <label for="stop-select">選擇巴士站:</label>
+    <label for="stop-select">
+      <span class="lang-zh">選擇巴士站:</span>
+      <span class="lang-en">Select Bus Stop:</span>
+    </label>
     <select id="stop-select" aria-label="選擇巴士站">
-      <option value="">請選擇巴士站</option>
+      <option value=""><span class="lang-zh">請選擇巴士站</span><span class="lang-en">Please select a bus stop</span></option>
     </select>
   </div>
-
   <div>
-    <label for="route-select">選擇巴士路線:</label>
+    <label for="route-select">
+      <span class="lang-zh">選擇巴士路線:</span>
+      <span class="lang-en">Select Bus Route:</span>
+    </label>
     <select id="route-select" aria-label="選擇巴士路線" disabled>
-      <option value="">請先選擇巴士站</option>
+      <option value=""><span class="lang-zh">請先選擇巴士站</span><span class="lang-en">Please select a bus stop first</span></option>
       <option value="fake_route_1">Fake Route 1 (非功能性)</option>
       <option value="fake_route_2">Fake Route 2 (非功能性)</option>
       <option value="fake_route_3">Fake Route 3 (非功能性)</option>
     </select>
   </div>
-
   <div>
-    <label for="service-type-select">選擇服務類型:</label>
+    <label for="service-type-select">
+      <span class="lang-zh">選擇服務類型:</span>
+      <span class="lang-en">Select Service Type:</span>
+    </label>
     <select id="service-type-select" aria-label="選擇服務類型" disabled>
-      <option value="">請先選擇巴士路線</option>
+      <option value=""><span class="lang-zh">請先選擇巴士路線</span><span class="lang-en">Please select a bus route first</span></option>
     </select>
   </div>
-
-  <button id="fetch-eta-button" class="large-button" disabled>查詢 ETA</button>
+  <button id="fetch-eta-button" class="large-button" disabled>
+    <span class="lang-zh">查詢 ETA</span>
+    <span class="lang-en">Fetch ETA</span>
+  </button>
   <div>
-     <button id="back-button" class="large-button" aria-label="返回首頁">返回</button>
+    <button id="back-button" class="large-button" aria-label="返回首頁">
+      <span class="lang-zh">返回</span>
+      <span class="lang-en">Back</span>
+    </button>
   </div>
-
-  <div>
-
-  <div id="loading" style="display:none;">讀取中...</div>
+  <div></div>
+  <div id="loading" style="display:none;">
+    <span class="lang-zh">讀取中...</span>
+    <span class="lang-en">Loading...</span>
+  </div>
   <div id="error-message" style="display:none;"></div>
   <textarea id="eta-list" aria-live="polite" aria-label="巴士到站時間列表" readonly rows="10"></textarea>
 </main>
-
 <script src="script.js"></script>
-
 </body>
 </html>
 

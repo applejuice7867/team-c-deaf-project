@@ -1,24 +1,43 @@
 <!DOCTYPE html>
-<html lang="zh-HK">
+<html lang="">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>語音轉文字</title>
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>語音轉文字 / Speech to Text</title>
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    (function() {
+      document.addEventListener('DOMContentLoaded', function() {
+        const lang = localStorage.getItem('lang') || 'zh-HK';
+        document.body.classList.remove('lang-zh-HK', 'lang-en');
+        document.body.classList.add(lang === 'en' ? 'lang-en' : 'lang-zh-HK');
+      });
+    })();
+  </script>
 </head>
 <body>
   <main>
-    <h1>語音轉文字</h1>
+    <h1>
+      <span class="lang-zh">語音轉文字</span>
+      <span class="lang-en">Speech to Text</span>
+    </h1>
     <div class="bottom-nav">
       <button id="nav-home" class="nav-btn" aria-label="主頁"><span style="font-size:2rem;">🏠</span></button>
       <button id="nav-settings" class="nav-btn" aria-label="設定"><img src="../images/setting-icon.png" alt="設定" style="height:32px;width:32px;object-fit:contain;" /></button>
     </div>
-    <label for="speech-textarea">語音文字輸出</label>
+    <label for="speech-textarea">
+      <span class="lang-zh">語音文字輸出</span>
+      <span class="lang-en">Speech Output</span>
+    </label>
     <textarea id="speech-textarea" rows="4" readonly placeholder="語音轉文字結果會顯示於此..." style="font-size:1.25rem; padding:0.8rem;"></textarea>
-
-    <button id="speech-toggle" class="large-button">開始聽講話</button>
-    <button id="btn-back-to-index" class="large-button" style="margin-top: 2.3rem;" onclick="window.location.href='index.html'">返回主頁</button>
-  </script>
+    <button id="speech-toggle" class="large-button">
+      <span class="lang-zh">開始聽講話</span>
+      <span class="lang-en">Start Listening</span>
+    </button>
+    <button id="btn-back-to-index" class="large-button" style="margin-top: 2.3rem;" onclick="window.location.href='index.html'">
+      <span class="lang-zh">返回主頁</span>
+      <span class="lang-en">Back to Home</span>
+    </button>
   </main>
   <script src="script.js"></script>
 </body>

@@ -1,45 +1,64 @@
 <!DOCTYPE html>
-<html lang="zh-HK">
+<html lang="">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>專線小巴資訊</title>
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>專線小巴資訊 / Minibus Info</title>
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    (function() {
+      document.addEventListener('DOMContentLoaded', function() {
+        const lang = localStorage.getItem('lang') || 'zh-HK';
+        document.body.classList.remove('lang-zh-HK', 'lang-en');
+        document.body.classList.add(lang === 'en' ? 'lang-en' : 'lang-zh-HK');
+      });
+    })();
+  </script>
 </head>
 <body>
   <main>
-    <h1>專線小巴</h1>
-    <p>請輸入專線小巴站牌編號以查詢即時抵達時間。</p>
-
-    <label for="stop-id-input">小巴站</label>
+    <h1>
+      <span class="lang-zh">專線小巴</span>
+      <span class="lang-en">Minibus</span>
+    </h1>
+    <p>
+      <span class="lang-zh">請輸入專線小巴站牌編號以查詢即時抵達時間。</span>
+      <span class="lang-en">Please enter the minibus stop code to check real-time arrival.</span>
+    </p>
+    <label for="stop-id-input">
+      <span class="lang-zh">小巴站</span>
+      <span class="lang-en">Minibus Stop</span>
+    </label>
     <select id="stop-id-input" aria-label="選擇小巴站名稱">
-      <option value="">請選擇一個站牌</option>
-      <option value="20003337">旺角</option>
-      <option value="tsim_sha_tsui">尖沙咀</option>
-      <option value="central">中環</option>
-      <option value="causeway_bay">銅鑼灣</option>
-      <option value="shatin">沙田</option>
-      <option value="dummy_stop_1">堅尼地城站</option>
-      <option value="dummy_stop_2">數碼港公共運輸交匯處</option>
-      <option value="dummy_stop_3">貝璐道</option>
+      <option value=""><span class="lang-zh">請選擇一個站牌</span><span class="lang-en">Please select a stop</span></option>
+      <option value="20003337"><span class="lang-zh">旺角</span><span class="lang-en">Mong Kok</span></option>
+      <option value="tsim_sha_tsui"><span class="lang-zh">尖沙咀</span><span class="lang-en">Tsim Sha Tsui</span></option>
+      <option value="central"><span class="lang-zh">中環</span><span class="lang-en">Central</span></option>
+      <option value="causeway_bay"><span class="lang-zh">銅鑼灣</span><span class="lang-en">Causeway Bay</span></option>
+      <option value="shatin"><span class="lang-zh">沙田</span><span class="lang-en">Sha Tin</span></option>
+      <option value="dummy_stop_1"><span class="lang-zh">堅尼地城站</span><span class="lang-en">Kennedy Town</span></option>
+      <option value="dummy_stop_2"><span class="lang-zh">數碼港公共運輸交匯處</span><span class="lang-en">Cyberport PTI</span></option>
+      <option value="dummy_stop_3"><span class="lang-zh">貝璐道</span><span class="lang-en">Belcher's Street</span></option>
     </select>
-
-
-    <button id="fetch-schedule" class="large-button" disabled>查詢時間表</button>
-
-    <div id="loading" style="display:none;">載入中…</div>
+    <button id="fetch-schedule" class="large-button" disabled>
+      <span class="lang-zh">查詢時間表</span>
+      <span class="lang-en">Fetch Schedule</span>
+    </button>
+    <div id="loading" style="display:none;">
+      <span class="lang-zh">載入中…</span>
+      <span class="lang-en">Loading…</span>
+    </div>
     <div id="error" style="display:none;"></div>
-
     <div id="schedule-list" aria-live="polite" aria-label="小巴到站時間列表" readonly rows="10"></div>
-
-    <button id="btn-home" class="large-button" style="margin-top: 2.3rem;">返回</button>
+    <button id="btn-home" class="large-button" style="margin-top: 2.3rem;">
+      <span class="lang-zh">返回</span>
+      <span class="lang-en">Back</span>
+    </button>
   </main>
-
   <div class="bottom-nav">
     <button id="nav-home" class="nav-btn" aria-label="主頁"><span style="font-size:2rem;">🏠</span></button>
     <button id="nav-settings" class="nav-btn" aria-label="設定"><img src="../images/setting-icon.png" alt="設定" style="height:32px;width:32px;object-fit:contain;" /></button>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>

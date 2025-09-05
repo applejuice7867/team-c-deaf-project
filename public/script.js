@@ -480,6 +480,19 @@ window.addEventListener('DOMContentLoaded', () => {
     "迪士尼綫": "DRL"
   };
 
+  const mtrLineCodeMapEn = {
+    "Airport Express": "AEL",
+    "Tung Chung Line": "TCL",
+    "Tuen Ma Line": "TML",
+    "Tseung Kwan O Line": "TKL",
+    "East Rail Line": "EAL",
+    "South Island Line": "SIL",
+    "Tsuen Wan Line": "TWL",
+    "Island Line": "ISL",
+    "Kwun Tong Line": "KTL",
+    "Disneyland Resort Line": "DRL"
+  };
+
   const mtrStationCodeMap = {
     "AEL": { "香港": "HOK", "九龍": "KOW", "青衣": "TSY", "機場": "AIR", "博覽館": "AWE" },
     "TCL": { "東涌": "TUC", "欣澳": "SUN", "青衣": "TSY", "荔景": "LCK", "南昌": "LAK", "奧運": "OLY", "九龍": "KOW", "香港": "HOK" },
@@ -493,19 +506,38 @@ window.addEventListener('DOMContentLoaded', () => {
     "DRL": { "欣澳": "SUN", "迪士尼": "DIS" }
   };
 
-  let stationCodeToNameMap = {};
-  for (const lineCode in mtrStationCodeMap) {
-    const stationsInLine = mtrStationCodeMap[lineCode];
-    for (const stationName in stationsInLine) {
-      const stationCode = stationsInLine[stationName];
-      stationCodeToNameMap[stationCode] = stationName;
+  const mtrStationCodeMapEn = {
+    "AEL": { "Hong Kong": "HOK", "Kowloon": "KOW", "Tsing Yi": "TSY", "Airport": "AIR", "AsiaWorld-Expo": "AWE" },
+    "TCL": { "Tung Chung": "TUC", "Sunny Bay": "SUN", "Tsing Yi": "TSY", "Lai King": "LCK", "Nam Cheong": "LAK", "Olympic": "OLY", "Kowloon": "KOW", "Hong Kong": "HOK" },
+    "TML": { "Tuen Mun": "TUM", "Siu Hong": "SIA", "Tin Shui Wai": "TIS", "Long Ping": "LOP", "Yuen Long": "YUL", "Kam Sheung Road": "KIS", "Tsuen Wan West": "TWW", "Mei Foo": "MEF", "Lai King": "LCK", "Prince Edward": "PRE", "Ho Man Tin": "HOM", "Hung Hom": "HUH", "Sung Wong Toi": "SHT", "Kai Tak": "KTE", "Diamond Hill": "DIH", "Hin Keng": "HIN", "Tai Wai": "TAW", "Sha Tin Wai": "STW", "Che Kung Temple": "CMT", "Shek Mun": "SIM", "Tai Shui Hang": "TWW", "Heng On": "HNG", "Ma On Shan": "MOS", "Wu Kai Sha": "WKS" },
+    "TKL": { "Tseung Kwan O": "TKO", "Po Lam": "POA", "LOHAS Park": "LHP", "Tiu Keng Leng": "TIK", "Yau Tong": "YAT", "Quarry Bay": "QUB", "North Point": "NOP" },
+    "EAL": { "Lo Wu": "LMC", "Lok Ma Chau": "LOW", "Sheung Shui": "SHS", "Fanling": "FLN", "Tai Wo": "TAH", "Tai Po Market": "TAP", "University": "UNI", "Racecourse": "RAC", "Fo Tan": "FOT", "Sha Tin": "SHT", "Tai Wai": "TAW", "Kowloon Tong": "KOT", "Mong Kok East": "MKK", "Hung Hom": "HUH", "Exhibition Centre": "EXC", "Admiralty": "ADM" },
+    "SIL": { "Admiralty": "ADM", "Ocean Park": "OCP", "Wong Chuk Hang": "WCH", "Lei Tung": "LET", "South Horizons": "SOH" },
+    "TWL": { "Tsuen Wan": "TSW", "Tai Wo Hau": "TWH", "Kwai Hing": "KWH", "Kwai Fong": "KWF", "Mei Foo": "MEF", "Lai Chi Kok": "LCK", "Cheung Sha Wan": "CSW", "Sham Shui Po": "SSP", "Prince Edward": "PRE", "Mong Kok": "MOK", "Yau Ma Tei": "YMT", "Jordan": "JOR", "Tsim Sha Tsui": "TST", "Admiralty": "ADM", "Central": "CEN" },
+    "ISL": { "Chai Wan": "CHW", "Heng Fa Chuen": "HFC", "Shau Kei Wan": "SKW", "Sai Wan Ho": "SWH", "Tai Koo": "TAK", "Quarry Bay": "QUB", "North Point": "NOP", "Fortress Hill": "FOH", "Tin Hau": "TIH", "Causeway Bay": "CAB", "Wan Chai": "WAC", "Admiralty": "ADM", "Central": "CEN", "Sheung Wan": "SHW", "HKU": "HKU", "Sai Ying Pun": "SYP", "Kennedy Town": "KET" },
+    "KTL": { "Kwun Tong": "KWT", "Ngau Tau Kok": "NTK", "Kowloon Bay": "KOB", "Choi Hung": "CHH", "Diamond Hill": "DIH", "Wong Tai Sin": "WTS", "Lok Fu": "LOF", "Kowloon Tong": "KOT", "Shek Kip Mei": "SKM", "Prince Edward": "PRE", "Mong Kok": "MOK", "Yau Ma Tei": "YMT", "Ho Man Tin": "HOM", "Whampoa": "WHA" },
+    "DRL": { "Sunny Bay": "SUN", "Disneyland Resort": "DIS" }
+  };
+
+  function buildStationCodeToNameMap(lang) {
+    const stationCodeToNameMap = {};
+    const stationMap = lang === 'en' ? mtrStationCodeMapEn : mtrStationCodeMap;
+    for (const lineCode in stationMap) {
+      const stationsInLine = stationMap[lineCode];
+      for (const stationName in stationsInLine) {
+        const stationCode = stationsInLine[stationName];
+        stationCodeToNameMap[stationCode] = stationName;
+      }
     }
+    return stationCodeToNameMap;
   }
 
   function populateLineOptionsMTR() {
     if (lineSelectMTR) {
-      lineSelectMTR.innerHTML = '<option value="">請選擇路綫</option>';
-      for (const lineName in mtrLineCodeMap) {
+      const lang = localStorage.getItem('lang') || 'zh-HK';
+      const lineMap = lang === 'en' ? mtrLineCodeMapEn : mtrLineCodeMap;
+      lineSelectMTR.innerHTML = lang === 'en' ? '<option value="">-- Select Line --</option>' : '<option value="">請選擇路綫</option>';
+      for (const lineName in lineMap) {
         const option = document.createElement('option');
         option.value = lineName;
         option.textContent = lineName;
@@ -517,12 +549,15 @@ window.addEventListener('DOMContentLoaded', () => {
   if (lineSelectMTR) {
     lineSelectMTR.onchange = () => {
       const selectedLineName = lineSelectMTR.value;
-      const lineCode = mtrLineCodeMap[selectedLineName];
-      const stations = lineCode && mtrStationCodeMap[lineCode] ? Object.keys(mtrStationCodeMap[lineCode]) : [];
+      const lang = localStorage.getItem('lang') || 'zh-HK';
+      const lineMap = lang === 'en' ? mtrLineCodeMapEn : mtrLineCodeMap;
+      const stationMap = lang === 'en' ? mtrStationCodeMapEn : mtrStationCodeMap;
+      const lineCode = lineMap[selectedLineName];
+      const stations = lineCode && stationMap[lineCode] ? Object.keys(stationMap[lineCode]) : [];
       if (stationSelectMTR) {
         stationSelectMTR.innerHTML = stations.length
-          ? '<option value="">請選擇車站</option>' + stations.map(s => `<option>${s}</option>`).join('')
-          : '<option value="">請先選擇路綫</option>';
+          ? (lang === 'en' ? '<option value="">-- Select Station --</option>' : '<option value="">請選擇車站</option>') + stations.map(s => `<option>${s}</option>`).join('')
+          : (lang === 'en' ? '<option value="">-- Select Line First --</option>' : '<option value="">請先選擇路綫</option>');
         stationSelectMTR.disabled = !stations.length;
       }
       if (fetchScheduleButtonMTR) fetchScheduleButtonMTR.disabled = true;
@@ -540,12 +575,14 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   function formatTrainInfo(train) {
-    if (!train) return '3 minutes';
+    const lang = localStorage.getItem('lang') || 'zh-HK';
+    if (!train) return lang === 'en' ? '3 minutes' : '3分鐘';
     
-    // Get destination name from code
-    const destinationName = stationCodeToNameMap[train.dest] || train.dest; // Use name if found, else use original value
+    // Get destination name from code using the correct language map
+    const stationCodeToNameMap = buildStationCodeToNameMap(lang);
+    const destinationName = stationCodeToNameMap[train.dest] || train.dest;
   
-    let timeString = '未知時間';
+    let timeString = lang === 'en' ? 'Unknown' : '未知時間';
     if (train.time) {
       try {
         // The API returns "YYYY-MM-DD HH:MM:SS"
@@ -556,14 +593,17 @@ window.addEventListener('DOMContentLoaded', () => {
           timeString = timeParts.substring(0, 5); // Get "HH:MM"
         }
       } catch (e) {
-        console.error("Error parsing train time:", train.time, e);
-        timeString = '時間格式錯誤';
+        timeString = lang === 'en' ? 'Time format error' : '時間格式錯誤';
       }
     }
     
     // The 'type' field is missing in the API response, so we can omit it or handle it.
     // For now, let's just display destination and time.
-    return `往 ${destinationName} - ${timeString}`;
+    if (lang === 'en') {
+      return `To ${destinationName} - ${timeString}`;
+    } else {
+      return `往 ${destinationName} - ${timeString}`;
+    }
   }
 
   if (fetchScheduleButtonMTR) {
@@ -580,23 +620,27 @@ window.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      const lineCode = mtrLineCodeMap[selectedLineName];
+      const lang = localStorage.getItem('lang') || 'zh-HK';
+      const lineMap = lang === 'en' ? mtrLineCodeMapEn : mtrLineCodeMap;
+      const stationMap = lang === 'en' ? mtrStationCodeMapEn : mtrStationCodeMap;
+      
+      const lineCode = lineMap[selectedLineName];
       // Check if lineCode is valid before proceeding
       if (!lineCode) {
         if (errorElMTR) {
           errorElMTR.style.display = 'block';
-          errorElMTR.textContent = "無效的路綫選擇";
+          errorElMTR.textContent = lang === 'en' ? "Invalid line selection" : "無效的路綫選擇";
         }
         if (fetchScheduleButtonMTR) fetchScheduleButtonMTR.disabled = true;
         return;
       }
 
-      const stationCode = mtrStationCodeMap[lineCode] ? mtrStationCodeMap[lineCode][stationName] : null;
+      const stationCode = stationMap[lineCode] ? stationMap[lineCode][stationName] : null;
       // Check if stationCode is valid
       if (!stationCode) {
         if (errorElMTR) {
           errorElMTR.style.display = 'block';
-          errorElMTR.textContent = "無效的車站選擇";
+          errorElMTR.textContent = lang === 'en' ? "Invalid station selection" : "無效的車站選擇";
         }
         if (fetchScheduleButtonMTR) fetchScheduleButtonMTR.disabled = true;
         return;
@@ -621,16 +665,19 @@ window.addEventListener('DOMContentLoaded', () => {
 
         if (loadingElMTR) loadingElMTR.style.display = 'none';
 
+        const lang = localStorage.getItem('lang') || 'zh-HK';
         if (data.status !== 1) {
           if (errorElMTR) {
             errorElMTR.style.display = 'block';
-            errorElMTR.textContent = data.message || "無法取得列車資料";
+            errorElMTR.textContent = lang === 'en'
+              ? (data.message || "Unable to get train data")
+              : (data.message || "無法取得列車資料");
           }
           return;
         }
 
-        const lineCodeForDataKey = mtrLineCodeMap[selectedLineName]; // Re-get lineCode for dataKey construction
-        const stationCodeForDataKey = lineCodeForDataKey && mtrStationCodeMap[lineCodeForDataKey] ? mtrStationCodeMap[lineCodeForDataKey][stationName] : null; // Re-get stationCode for dataKey construction
+        const lineCodeForDataKey = lineCode; // Use the already validated lineCode
+        const stationCodeForDataKey = stationCode; // Use the already validated stationCode
         const dataKey = `${lineCodeForDataKey}-${stationCodeForDataKey}`;
         const stationData = data.data ? data.data[dataKey] : null;
 
@@ -638,7 +685,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
         if (stationData) {
           if (stationData.UP && stationData.UP.length > 0) {
-            trainsDisplay.push("<b>往市區方向列車：</b><ul>");
+            trainsDisplay.push(lang === 'en' ? "<b>To Urban Direction Trains:</b><ul>" : "<b>往市區方向列車：</b><ul>");
             stationData.UP.slice(0, 4).forEach(train => {
               trainsDisplay.push(`<li>${formatTrainInfo(train)}</li>`);
             });
@@ -646,7 +693,7 @@ window.addEventListener('DOMContentLoaded', () => {
           }
 
           if (stationData.DOWN && stationData.DOWN.length > 0) {
-            trainsDisplay.push("<b>往新界方向列車：</b><ul>");
+            trainsDisplay.push(lang === 'en' ? "<b>To New Territories Direction Trains:</b><ul>" : "<b>往新界方向列車：</b><ul>");
             stationData.DOWN.slice(0, 4).forEach(train => {
               trainsDisplay.push(`<li>${formatTrainInfo(train)}</li>`);
             });
@@ -655,7 +702,9 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
         if (trainsDisplay.length === 0) {
-          scheduleListElMTR.innerHTML = '<p style="color:#ff8d21;font-weight:bold;">沒有即時列車資料。</p>';
+          scheduleListElMTR.innerHTML = lang === 'en'
+            ? '<p style="color:#ff8d21;font-weight:bold;">No real-time train data.</p>'
+            : '<p style="color:#ff8d21;font-weight:bold;">沒有即時列車資料。</p>';
         } else {
           scheduleListElMTR.innerHTML = trainsDisplay.join('');
         }
@@ -663,7 +712,9 @@ window.addEventListener('DOMContentLoaded', () => {
         if (loadingElMTR) loadingElMTR.style.display = 'none';
         if (errorElMTR) {
           errorElMTR.style.display = 'block';
-          errorElMTR.textContent = "載入資料時出錯: " + err.message;
+          errorElMTR.textContent = lang === 'en'
+            ? "Error loading data: " + err.message
+            : "載入資料時出錯: " + err.message;
         }
       }
     };
