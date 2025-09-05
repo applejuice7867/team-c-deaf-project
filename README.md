@@ -83,7 +83,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot]]()
 
 The Deaf Transportation Aid by Team C Industries is a application to aid deaf people in navigating the public transportation systems in Hong Kong.
 
