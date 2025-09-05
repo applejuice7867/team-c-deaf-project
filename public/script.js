@@ -51,6 +51,20 @@ document.getElementById('btn-stt')?.addEventListener('click', () => {
   window.location.href = './stt.html';
 });
 
+// --- Bottom Navigation ---
+const navSettingsBtn = document.getElementById('nav-settings');
+if (navSettingsBtn) {
+  navSettingsBtn.addEventListener('click', () => {
+    window.location.href = './settings.html';
+  });
+}
+const navHomeBtn = document.getElementById('nav-home');
+if (navHomeBtn) {
+  navHomeBtn.addEventListener('click', () => {
+    window.location.href = './index.html';
+  });
+}
+
 // --- Bus Page JavaScript ---
 console.log("Bus page script loaded");
 
@@ -666,3 +680,10 @@ window.addEventListener('DOMContentLoaded', () => {
   // Initialize line dropdown on page load
   populateLineOptionsMTR();
 });
+
+// --- Language Static Switcher ---
+(function() {
+  const lang = localStorage.getItem('lang') || 'zh-HK';
+  document.body.classList.remove('lang-zh-HK', 'lang-en');
+  document.body.classList.add(lang === 'en' ? 'lang-en' : 'lang-zh-HK');
+})();

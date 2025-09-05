@@ -9,7 +9,10 @@
 <body>
   <main>
     <h1>語音轉文字</h1>
-    <button id="theme-toggle-button" class="large-button" style="background-color: #ff8d21; color: black; font-size: 1rem; padding: 0.5rem; margin-top: 1rem;">切換主題</button>
+    <div class="bottom-nav">
+      <button id="nav-home" class="nav-btn" aria-label="主頁"><span style="font-size:2rem;">🏠</span></button>
+      <button id="nav-settings" class="nav-btn" aria-label="設定"><img src="../images/setting-icon.png" alt="設定" style="height:32px;width:32px;object-fit:contain;" /></button>
+    </div>
     <label for="speech-textarea">語音文字輸出</label>
     <textarea id="speech-textarea" rows="4" readonly placeholder="語音轉文字結果會顯示於此..." style="font-size:1.25rem; padding:0.8rem;"></textarea>
 

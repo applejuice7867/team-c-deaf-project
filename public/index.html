@@ -5,18 +5,46 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>HK Deaf Elderly Transit Aid</title>
 <link rel="stylesheet" href="style.css" />
+<script>
+  (function() {
+    document.addEventListener('DOMContentLoaded', function() {
+      const lang = localStorage.getItem('lang') || 'zh-HK';
+      document.body.classList.remove('lang-zh-HK', 'lang-en');
+      document.body.classList.add(lang === 'en' ? 'lang-en' : 'lang-zh-HK');
+    });
+  })();
+</script>
 </head>
 <body>
   <main>
-    <h1>請選擇交通方式</h1>
-    <button id="theme-toggle-button" class="large-button" style="background-color: #ff8d21; color: black; font-size: 1rem; padding: 0.5rem; margin-top: 1rem;">切換主題</button>
+    <h1>
+      <span class="lang-zh">請選擇交通方式</span>
+      <span class="lang-en">Please select a transport mode</span>
+    </h1>
     <div class="button-container">
-      <button id="btn-mtr" class="large-button">港鐵</button>
-      <button id="btn-minibus" class="large-button">專線小巴</button>
-      <button id="btn-bus" class="large-button">巴士</button>
-      <button id="btn-stt" class="large-button">語音轉文字</button>
+      <button id="btn-mtr" class="large-button">
+        <span class="lang-zh">港鐵</span>
+        <span class="lang-en">MTR</span>
+      </button>
+      <button id="btn-minibus" class="large-button">
+        <span class="lang-zh">專線小巴</span>
+        <span class="lang-en">Minibus</span>
+      </button>
+      <button id="btn-bus" class="large-button">
+        <span class="lang-zh">巴士</span>
+        <span class="lang-en">Bus</span>
+      </button>
+      <button id="btn-stt" class="large-button">
+        <span class="lang-zh">語音轉文字</span>
+        <span class="lang-en">Speech to Text</span>
+      </button>
     </div>
   </main>
+
+  <div class="bottom-nav">
+    <button id="nav-home" class="nav-btn" aria-label="主頁"><span style="font-size:2rem;">🏠</span></button>
+    <button id="nav-settings" class="nav-btn" aria-label="設定"><img src="../images/setting-icon.png" alt="設定" style="height:32px;width:32px;object-fit:contain;" /></button>
+  </div>
 
   <script src="script.js"></script>
 </body>

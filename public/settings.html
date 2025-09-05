@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="" id="html-root">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings / 設定</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <h1>
+      <span class="lang-zh">設定</span>
+      <span class="lang-en">Settings</span>
+    </h1>
+    <div style="margin-bottom:2rem;">
+      <label for="language-select">
+        <span class="lang-zh">語言</span>
+        <span class="lang-en">Language</span>
+      </label>
+      <select id="language-select" style="width:100%;max-width:320px;">
+        <option value="zh-HK">中文</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+    <div style="margin-bottom:2rem;">
+      <button id="theme-toggle-button" class="large-button" style="width:100%;max-width:320px;">
+        <span class="lang-zh">切換主題</span>
+        <span class="lang-en">Toggle Theme</span>
+      </button>
+    </div>
+    <div style="margin-bottom:2rem;">
+      <button id="save-settings" class="large-button" style="width:100%;max-width:320px;">
+        <span class="lang-zh">儲存設定</span>
+        <span class="lang-en">Save Settings</span>
+      </button>
+    </div>
+  </main>
+  <div class="bottom-nav">
+    <button id="nav-home" class="nav-btn" aria-label="主頁">
+      <span style="font-size:2rem;">🏠</span>
+    </button>
+    <button id="nav-settings" class="nav-btn" aria-label="設定">
+      <img src="../images/setting-icon.png" alt="設定" style="height:32px;width:32px;object-fit:contain;" />
+    </button>
+  </div>
+  <script src="script.js"></script>
+  <script>
+    // On DOMContentLoaded, set body class and UI to match saved settings
+    document.addEventListener('DOMContentLoaded', function() {
+      // Language
+      const lang = localStorage.getItem('lang') || 'zh-HK';
+      document.body.classList.remove('lang-zh-HK', 'lang-en');
+      document.body.classList.add(lang === 'en' ? 'lang-en' : 'lang-zh-HK');
+      document.getElementById('language-select').value = lang;
+      // Theme
+      let selectedTheme = localStorage.getItem('theme') || 'light';
+      const themeToggleBtn = document.getElementById('theme-toggle-button');
+      function setTheme(theme) {
+        selectedTheme = theme;
+        if (theme === 'dark') {
+          document.body.classList.add('dark-mode');
+          themeToggleBtn.textContent = '☀️';
+          themeToggleBtn.style.backgroundColor = '#1a1a1a';
+          themeToggleBtn.style.color = 'white';
+        } else {
+          document.body.classList.remove('dark-mode');
+          themeToggleBtn.textContent = '🌙';
+          themeToggleBtn.style.backgroundColor = 'white';
+          themeToggleBtn.style.color = 'black';
+        }
+      }
+      setTheme(selectedTheme);
+      themeToggleBtn.addEventListener('click', () => {
+        selectedTheme = (selectedTheme === 'dark' ? 'light' : 'dark');
+        setTheme(selectedTheme);
+      });
+      // Save Settings button
+      document.getElementById('save-settings').addEventListener('click', function() {
+        const lang = document.getElementById('language-select').value;
+        localStorage.setItem('lang', lang);
+        localStorage.setItem('theme', selectedTheme);
+        alert(lang === 'en' ? 'Settings saved!' : '設定已儲存！');
+        window.location.reload();
+      });
+    });
+  </script>
+</body>
+</html>

@@ -9,7 +9,6 @@
 <body>
   <main>
     <h1>專線小巴</h1>
-    <button id="theme-toggle-button" class="large-button" style="background-color: #ff8d21; color: black; font-size: 1rem; padding: 0.5rem; margin-top: 1rem;">切換主題</button>
     <p>請輸入專線小巴站牌編號以查詢即時抵達時間。</p>
 
     <label for="stop-id-input">小巴站</label>
@@ -35,6 +34,11 @@
 
     <button id="btn-home" class="large-button" style="margin-top: 2.3rem;">返回</button>
   </main>
+
+  <div class="bottom-nav">
+    <button id="nav-home" class="nav-btn" aria-label="主頁"><span style="font-size:2rem;">🏠</span></button>
+    <button id="nav-settings" class="nav-btn" aria-label="設定"><img src="../images/setting-icon.png" alt="設定" style="height:32px;width:32px;object-fit:contain;" /></button>
+  </div>
 
   <script src="script.js"></script>
 </body>

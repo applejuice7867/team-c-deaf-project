@@ -48,6 +48,7 @@ main {
   max-width: 480px;
   width: 100%;
   text-align: center;
+  padding-bottom: 70px; /* space for bottom nav */
 }
 
 h1 {
@@ -175,3 +176,51 @@ textarea {
   font-size: 1.2rem; /* Slightly smaller font for list items */
   line-height: 1.5;
 }
+
+.bottom-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 60px;
+  background: #fff;
+  border-top: 1.5px solid #eee;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 100;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.04);
+}
+
+.dark-mode .bottom-nav {
+  background: #1a1a1a;
+  border-top: 1.5px solid #333;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #ff8d21;
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.nav-btn:active, .nav-btn:focus {
+  background: #ffcc99;
+  outline: none;
+}
+
+.dark-mode .nav-btn {
+  color: #8a2be2;
+}
+
+body.lang-zh-HK .lang-zh { display: inline; }
+body.lang-zh-HK .lang-en { display: none; }
+body.lang-en .lang-zh { display: none; }
+body.lang-en .lang-en { display: inline; }
