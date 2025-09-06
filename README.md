@@ -130,7 +130,7 @@ Chrome is needed as we are currently using speech to text from chrome.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-If you are not contributing and just want to use this, please go to deaftransportaid.pages.dev.
+If you are not contributing and just want to use this, please go to [The website](deaftransportaid.pages.dev).  
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
