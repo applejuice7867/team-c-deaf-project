@@ -202,7 +202,7 @@ Project Link: [https://github.com/applejuice7867/team-c-deaf-project](https://gi
 ## Acknowledgments
 
 * [Daniel She](https://github.com/shedaniel)
-* [Thomas Yip]()
+* [Thomas Yip](https://github.com/yipthomas1)
 * [Tom Jong](https://github.com/JYWTom)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
