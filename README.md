@@ -130,7 +130,7 @@ Chrome is needed as we are currently using speech to text from chrome.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-As this project is still in early stages without any packages or hosting. Please clone the repo and host it yourself, it should be hosted in about 3 months(expect mobile app before 2026).
+If you are not contributing and just want to use this, please go to deaftransportaid.pages.dev.
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
