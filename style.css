@@ -378,6 +378,23 @@ textarea {
   color: white;
 }
 
+/* Settings icon theme switching */
+.settings-icon-light {
+  display: block;
+}
+
+.settings-icon-dark {
+  display: none;
+}
+
+.dark-mode .settings-icon-light {
+  display: none;
+}
+
+.dark-mode .settings-icon-dark {
+  display: block;
+}
+
 body.lang-zh-HK .lang-zh { display: inline; }
 body.lang-zh-HK .lang-en { display: none; }
 body.lang-en .lang-zh { display: none; }
