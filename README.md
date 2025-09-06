@@ -223,7 +223,7 @@ Project Link: [https://github.com/applejuice7867/team-c-deaf-project](https://gi
 [license-url]: https://github.com/applejuice7867/team-c-deaf-project/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/linkedin_username
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: images/creamshot.png
 [Node-url]: https://nodejs.org/en
 [Node.js]: https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white
 [Python-url]: https://www.python.org/
