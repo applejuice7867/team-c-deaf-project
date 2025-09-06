@@ -130,7 +130,7 @@ Chrome is needed as we are currently using speech to text from chrome.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-As this project is still in early stages without any packages or hosting. Please clone the repo and host it yourself, it should be hosted in about 3 months(expect mobile app before 2026).
+If you are not contributing and just want to use this, please go to [The website](https://deaftransportaid.pages.dev)  
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
@@ -223,7 +223,7 @@ Project Link: [https://github.com/applejuice7867/team-c-deaf-project](https://gi
 [license-url]: https://github.com/applejuice7867/team-c-deaf-project/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/linkedin_username
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: images/creamshot.png
 [Node-url]: https://nodejs.org/en
 [Node.js]: https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white
 [Python-url]: https://www.python.org/
