@@ -17,32 +17,60 @@
 </head>
 <body>
   <main>
-    <h1>
-      <span class="lang-zh">請選擇交通方式</span>
-      <span class="lang-en">Please select a transport mode</span>
-    </h1>
-    <div class="button-container">
-      <button id="btn-mtr" class="large-button">
-        <span class="lang-zh">港鐵</span>
-        <span class="lang-en">MTR</span>
-      </button>
-      <button id="btn-minibus" class="large-button">
-        <span class="lang-zh">專線小巴</span>
-        <span class="lang-en">Minibus</span>
-      </button>
-      <button id="btn-bus" class="large-button">
-        <span class="lang-zh">巴士</span>
-        <span class="lang-en">Bus</span>
-      </button>
-      <button id="btn-stt" class="large-button">
-        <span class="lang-zh">語音轉文字</span>
-        <span class="lang-en">Speech to Text</span>
-      </button>
+    <div class="welcome-section">
+      <div class="logo-container">
+        <img src="../images/logo.png" alt="HK Deaf Elderly Transit Aid" class="app-logo">
+      </div>
+      <h1 class="welcome-title">
+        <span class="lang-zh">歡迎使用香港聾人長者交通助手</span>
+        <span class="lang-en">Welcome to HK Deaf Elderly Transit Aid</span>
+      </h1>
+      <p class="welcome-subtitle">
+        <span class="lang-zh">您的智能交通出行夥伴</span>
+        <span class="lang-en">Your Smart Transportation Companion</span>
+      </p>
+    </div>
+
+    <div class="quick-access-section">
+      <h2 class="section-title">
+        <span class="lang-zh">快速功能</span>
+        <span class="lang-en">Quick Access</span>
+      </h2>
+      <div class="quick-access-grid">
+        <button id="btn-transport" class="quick-access-btn">
+          <div class="btn-icon">🚌</div>
+          <div class="btn-text">
+            <span class="lang-zh">交通查詢</span>
+            <span class="lang-en">Transport</span>
+          </div>
+        </button>
+        <button id="btn-stt" class="quick-access-btn">
+          <div class="btn-icon">🎤</div>
+          <div class="btn-text">
+            <span class="lang-zh">語音轉文字</span>
+            <span class="lang-en">Speech to Text</span>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <div class="info-card">
+        <h3>
+          <span class="lang-zh">關於此應用</span>
+          <span class="lang-en">About This App</span>
+        </h3>
+        <p>
+          <span class="lang-zh">專為香港聾人長者設計的交通查詢應用，提供即時巴士、港鐵及小巴資訊，讓出行更便利。</span>
+          <span class="lang-en">Designed for Hong Kong's deaf elderly community, providing real-time bus, MTR, and minibus information for easier travel.</span>
+        </p>
+      </div>
     </div>
   </main>
 
   <div class="bottom-nav">
-    <button id="nav-home" class="nav-btn" aria-label="主頁"><span style="font-size:2rem;">🏠</span></button>
+    <button id="nav-home" class="nav-btn active" aria-label="主頁"><span style="font-size:2rem;">🏠</span></button>
+    <button id="nav-transport" class="nav-btn" aria-label="交通"><span style="font-size:2rem;">🚌</span></button>
     <button id="nav-settings" class="nav-btn" aria-label="設定"><img src="../images/setting-icon.png" alt="設定" style="height:32px;width:32px;object-fit:contain;" /></button>
   </div>
 

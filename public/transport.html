@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Transport Options - HK Deaf Elderly Transit Aid</title>
+<link rel="stylesheet" href="style.css" />
+<script>
+  (function() {
+    document.addEventListener('DOMContentLoaded', function() {
+      const lang = localStorage.getItem('lang') || 'zh-HK';
+      document.body.classList.remove('lang-zh-HK', 'lang-en');
+      document.body.classList.add(lang === 'en' ? 'lang-en' : 'lang-zh-HK');
+    });
+  })();
+</script>
+</head>
+<body>
+  <main>
+    <h1>
+      <span class="lang-zh">請選擇交通方式</span>
+      <span class="lang-en">Please select a transport mode</span>
+    </h1>
+    <div class="button-container">
+      <button id="btn-mtr" class="large-button">
+        <span class="lang-zh">港鐵</span>
+        <span class="lang-en">MTR</span>
+      </button>
+      <button id="btn-minibus" class="large-button">
+        <span class="lang-zh">專線小巴</span>
+        <span class="lang-en">Minibus</span>
+      </button>
+      <button id="btn-bus" class="large-button">
+        <span class="lang-zh">巴士</span>
+        <span class="lang-en">Bus</span>
+      </button>
+    </div>
+  </main>
+
+  <div class="bottom-nav">
+    <button id="nav-home" class="nav-btn" aria-label="主頁"><span style="font-size:2rem;">🏠</span></button>
+    <button id="nav-transport" class="nav-btn active" aria-label="交通"><span style="font-size:2rem;">🚌</span></button>
+    <button id="nav-settings" class="nav-btn" aria-label="設定"><img src="../images/setting-icon.png" alt="設定" style="height:32px;width:32px;object-fit:contain;" /></button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

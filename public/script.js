@@ -29,6 +29,7 @@ themeToggleBtn?.addEventListener('click', () => {
 
 setTheme(localStorage.getItem('theme') || 'light');
 
+// Transport page navigation
 document.getElementById('btn-mtr')?.addEventListener('click', () => {
   window.location.href = './mtr.html';
 });
@@ -37,6 +38,11 @@ document.getElementById('btn-minibus')?.addEventListener('click', () => {
 });
 document.getElementById('btn-bus')?.addEventListener('click', () => {
   window.location.href = './bus.html';
+});
+
+// Home page quick access buttons
+document.getElementById('btn-transport')?.addEventListener('click', () => {
+  window.location.href = './transport.html';
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -62,6 +68,12 @@ const navHomeBtn = document.getElementById('nav-home');
 if (navHomeBtn) {
   navHomeBtn.addEventListener('click', () => {
     window.location.href = './index.html';
+  });
+}
+const navTransportBtn = document.getElementById('nav-transport');
+if (navTransportBtn) {
+  navTransportBtn.addEventListener('click', () => {
+    window.location.href = './transport.html';
   });
 }
 
