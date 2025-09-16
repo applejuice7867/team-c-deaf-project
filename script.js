@@ -514,7 +514,7 @@ window.addEventListener('DOMContentLoaded', () => {
     "SIL": { "金鐘": "ADM", "海洋公園": "OCP", "黃竹坑": "WCH", "利東": "LET", "海怡半島": "SOH" },
     "TWL": { "荃灣": "TSW", "大窩口": "TWH", "葵興": "KWH", "葵芳": "KWF", "美孚": "MEF", "荔枝角": "LCK", "長沙灣": "CSW", "深水埗": "SSP", "太子": "PRE", "旺角": "MOK", "油麻地": "YMT", "佐敦": "JOR", "尖沙咀": "TST", "金鐘": "ADM", "中環": "CEN" },
     "ISL": { "柴灣": "CHW", "杏花邨": "HFC", "筲箕灣": "SKW", "西灣河": "SWH", "太古": "TAK", "鰂魚涌": "QUB", "北角": "NOP", "炮台山": "FOH", "天后": "TIH", "銅鑼灣": "CAB", "灣仔": "WAC", "金鐘": "ADM", "中環": "CEN", "上環": "SHW", "香港大學": "HKU", "西營盤": "SYP", "堅尼地城": "KET" },
-    "KTL": { "油塘": "", "藍田": "LAT", "觀塘": "KWT", "牛頭角": "NTK", "九龍灣": "KOB", "彩虹": "CHH", "鑽石山": "DIH", "黃大仙": "WTS", "樂富": "LOF", "九龍塘": "KOT", "石硤尾": "SKM", "太子": "PRE", "旺角": "MOK", "油麻地": "YMT", "何文田": "HOM", "黃埔": "WHA" },
+    "KTL": { "調景嶺": "TIK", "油塘": "YAT", "藍田": "LAT", "觀塘": "KWT", "牛頭角": "NTK", "九龍灣": "KOB", "彩虹": "CHH", "鑽石山": "DIH", "黃大仙": "WTS", "樂富": "LOF", "九龍塘": "KOT", "石硤尾": "SKM", "太子": "PRE", "旺角": "MOK", "油麻地": "YMT", "何文田": "HOM", "黃埔": "WHA" },
     "DRL": { "欣澳": "SUN", "迪士尼": "DIS" }
   };
 
@@ -527,7 +527,7 @@ window.addEventListener('DOMContentLoaded', () => {
     "SIL": { "Admiralty": "ADM", "Ocean Park": "OCP", "Wong Chuk Hang": "WCH", "Lei Tung": "LET", "South Horizons": "SOH" },
     "TWL": { "Tsuen Wan": "TSW", "Tai Wo Hau": "TWH", "Kwai Hing": "KWH", "Kwai Fong": "KWF", "Mei Foo": "MEF", "Lai Chi Kok": "LCK", "Cheung Sha Wan": "CSW", "Sham Shui Po": "SSP", "Prince Edward": "PRE", "Mong Kok": "MOK", "Yau Ma Tei": "YMT", "Jordan": "JOR", "Tsim Sha Tsui": "TST", "Admiralty": "ADM", "Central": "CEN" },
     "ISL": { "Chai Wan": "CHW", "Heng Fa Chuen": "HFC", "Shau Kei Wan": "SKW", "Sai Wan Ho": "SWH", "Tai Koo": "TAK", "Quarry Bay": "QUB", "North Point": "NOP", "Fortress Hill": "FOH", "Tin Hau": "TIH", "Causeway Bay": "CAB", "Wan Chai": "WAC", "Admiralty": "ADM", "Central": "CEN", "Sheung Wan": "SHW", "HKU": "HKU", "Sai Ying Pun": "SYP", "Kennedy Town": "KET" },
-    "KTL": { "Kwun Tong": "KWT", "Ngau Tau Kok": "NTK", "Kowloon Bay": "KOB", "Choi Hung": "CHH", "Diamond Hill": "DIH", "Wong Tai Sin": "WTS", "Lok Fu": "LOF", "Kowloon Tong": "KOT", "Shek Kip Mei": "SKM", "Prince Edward": "PRE", "Mong Kok": "MOK", "Yau Ma Tei": "YMT", "Ho Man Tin": "HOM", "Whampoa": "WHA" },
+    "KTL": { "Tiu Keng Leng": "TIK", "Yau Tong": "YAT", "Lam Tin": "LAT", "Kwun Tong": "KWT", "Ngau Tau Kok": "NTK", "Kowloon Bay": "KOB", "Choi Hung": "CHH", "Diamond Hill": "DIH", "Wong Tai Sin": "WTS", "Lok Fu": "LOF", "Kowloon Tong": "KOT", "Shek Kip Mei": "SKM", "Prince Edward": "PRE", "Mong Kok": "MOK", "Yau Ma Tei": "YMT", "Ho Man Tin": "HOM", "Whampoa": "WHA" },
     "DRL": { "Sunny Bay": "SUN", "Disneyland Resort": "DIS" }
   };
 
