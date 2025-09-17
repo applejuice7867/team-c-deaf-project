@@ -56,28 +56,28 @@
       <span class="lang-zh">選擇服務類型:</span>
       <span class="lang-en">Select Service Type:</span>
     </label>
-    <select id="service-type-select" aria-label="選擇服務類型" disabled>
+    <select id="service-type-select" aria-label="服務類型選擇" disabled>
       <option value=""><span class="lang-zh">請先選擇巴士路線</span><span class="lang-en">Please select a bus route first</span></option>
     </select>
   </div>
-  <button id="fetch-eta-button" class="large-button" disabled>
-    <span class="lang-zh">查詢 ETA</span>
-    <span class="lang-en">Fetch ETA</span>
-  </button>
-  <div>
-    <button id="back-button" class="large-button" aria-label="返回首頁">
-      <span class="lang-zh">返回</span>
-      <span class="lang-en">Back</span>
+  <div style="margin-top: 1rem;">
+    <button id="fetch-eta-button" class="large-button" disabled>
+      <span class="lang-zh">查詢到站時間</span>
+      <span class="lang-en">Fetch ETA</span>
     </button>
   </div>
-  <div></div>
-  <div id="loading" style="display:none;">
-    <span class="lang-zh">讀取中...</span>
-    <span class="lang-en">Loading...</span>
+  <div id="loading" style="display:none;margin-top: 1rem;">
+    <span class="lang-zh">載入中…</span>
+    <span class="lang-en">Loading…</span>
   </div>
-  <div id="error-message" style="display:none;"></div>
-  <textarea id="eta-list" aria-live="polite" aria-label="巴士到站時間列表" readonly rows="10"></textarea>
+  <div id="error-message" style="display:none;color:red;font-weight:bold;margin-top: 1rem;"></div>
+  <div id="eta-list" style="margin-top:1rem;"></div>
 </main>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase.js"></script>
+<script src="prefs.js"></script>
 <script src="script.js"></script>
 </body>
 </html>

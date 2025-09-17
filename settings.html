@@ -12,6 +12,19 @@
       <span class="lang-zh">設定</span>
       <span class="lang-en">Settings</span>
     </h1>
+
+    <div style="margin-bottom:1rem;">
+      <div id="auth-status" style="font-weight:bold;margin-bottom:0.5rem;">未登入</div>
+      <button id="btn-sign-in" class="large-button" style="width:100%;max-width:320px;">
+        <span class="lang-zh">以 Google 登入</span>
+        <span class="lang-en">Sign in with Google</span>
+      </button>
+      <button id="btn-sign-out" class="large-button" style="width:100%;max-width:320px;display:none;">
+        <span class="lang-zh">登出</span>
+        <span class="lang-en">Sign Out</span>
+      </button>
+    </div>
+
     <div style="margin-bottom:2rem;">
       <label for="language-select">
         <span class="lang-zh">語言</span>
@@ -44,9 +57,14 @@
       <img src="../images/settings-icon-dark.png" alt="設定" class="settings-icon-dark" style="height:32px;width:32px;object-fit:contain;" />
     </button>
   </div>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="firebase.js"></script>
+  <script src="prefs.js"></script>
   <script src="script.js"></script>
   <script>
-    // On DOMContentLoaded, set body class and UI to match saved settings
+    // On DOMContentLoaded, set body class and UI to match saved settings, and wire Firebase auth
     document.addEventListener('DOMContentLoaded', function() {
       // Language
       const lang = localStorage.getItem('lang') || 'zh-HK';
@@ -75,12 +93,70 @@
         selectedTheme = (selectedTheme === 'dark' ? 'light' : 'dark');
         setTheme(selectedTheme);
       });
+
+      // Firebase Auth wiring
+      const signInBtn = document.getElementById('btn-sign-in');
+      const signOutBtn = document.getElementById('btn-sign-out');
+      const authStatus = document.getElementById('auth-status');
+
+      function updateAuthUI(user) {
+        const langNow = localStorage.getItem('lang') || 'zh-HK';
+        if (user) {
+          if (authStatus) authStatus.textContent = langNow === 'en' ? `Signed in as ${user.email || user.displayName || user.uid}` : `已登入：${user.email || user.displayName || user.uid}`;
+          if (signInBtn) signInBtn.style.display = 'none';
+          if (signOutBtn) signOutBtn.style.display = 'inline-block';
+        } else {
+          if (authStatus) authStatus.textContent = langNow === 'en' ? 'Not signed in' : '未登入';
+          if (signInBtn) signInBtn.style.display = 'inline-block';
+          if (signOutBtn) signOutBtn.style.display = 'none';
+        }
+      }
+
+      if (window.firebaseReady && window.auth) {
+        window.auth.onAuthStateChanged(updateAuthUI);
+
+        if (signInBtn) {
+          signInBtn.addEventListener('click', async function() {
+            try {
+              const provider = new firebase.auth.GoogleAuthProvider();
+              await window.auth.signInWithPopup(provider);
+            } catch (e) {
+              console.warn('Sign-in failed:', e);
+              alert('Sign-in failed: ' + (e && e.message ? e.message : e));
+            }
+          });
+        }
+        if (signOutBtn) {
+          signOutBtn.addEventListener('click', async function() {
+            try {
+              await window.auth.signOut();
+            } catch (e) {
+              console.warn('Sign-out failed:', e);
+            }
+          });
+        }
+      }
+
       // Save Settings button
-      document.getElementById('save-settings').addEventListener('click', function() {
-        const lang = document.getElementById('language-select').value;
-        localStorage.setItem('lang', lang);
+      document.getElementById('save-settings').addEventListener('click', async function() {
+        const currentLang = document.getElementById('language-select').value;
+        localStorage.setItem('lang', currentLang);
         localStorage.setItem('theme', selectedTheme);
-        alert(lang === 'en' ? 'Settings saved!' : '設定已儲存！');
+
+        // Save to Firestore if signed in
+        if (window.firebaseReady && window.auth && window.db && window.auth.currentUser) {
+          try {
+            const uid = window.auth.currentUser.uid;
+            await window.db.collection('users').doc(uid).set({
+              lang: currentLang,
+              theme: selectedTheme,
+              updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            }, { merge: true });
+          } catch (e) {
+            console.warn('Saving prefs to Firestore failed:', e);
+          }
+        }
+        alert(currentLang === 'en' ? 'Settings saved!' : '設定已儲存！');
         window.location.reload();
       });
     });

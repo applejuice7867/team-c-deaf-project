@@ -48,8 +48,8 @@
       <span class="lang-zh">載入中…</span>
       <span class="lang-en">Loading…</span>
     </div>
-    <div id="error" style="display:none;"></div>
-    <div id="schedule-list" aria-live="polite" aria-label="小巴到站時間列表" readonly rows="10"></div>
+    <div id="error" style="display:none;color:red;font-weight:bold;"></div>
+    <div id="schedule-list"></div>
     <button id="btn-home" class="large-button" style="margin-top: 2.3rem;">
       <span class="lang-zh">返回</span>
       <span class="lang-en">Back</span>
@@ -62,6 +62,11 @@
       <img src="../images/settings-icon-dark.png" alt="設定" class="settings-icon-dark" style="height:32px;width:32px;object-fit:contain;" />
     </button>
   </div>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="firebase.js"></script>
+  <script src="prefs.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

@@ -48,19 +48,6 @@
   margin-top: 2rem; /* Add some space above the schedule list */
   padding: 1.5rem; /* Padding inside the box */
   border: 2px solid #9370db; /* Purple border, consistent with other elements */
-  border-radius: 15px; /* Rounded corners */
-  background-color: #f9f9f9; /* Light background for the box */
-  text-align: center; /* Center align content within the box */
-}
-
-.dark-mode #schedule-list {
-  border-color: #8a2be2; /* Purple border for dark mode */
-  background-color: #2a2a2a; /* Darker background for dark mode */
-}
-
-/* Ensure text alignment is left for list items */
-#schedule-list li {
-  text-align: left;
 }
 </style>
 </head>
@@ -81,31 +68,32 @@
       <span class="lang-zh">請選擇路綫</span>
       <span class="lang-en">Select Line</span>
     </label>
-    <select id="line-select" aria-label="選擇港鐵路綫">
-      <option value=""><span class="lang-zh">-- 請選擇路綫 --</span><span class="lang-en">-- Select Line --</span></option>
+    <select id="line-select" aria-label="請選擇路綫">
+      <option value=""><span class="lang-zh">請選擇路綫</span><span class="lang-en">Select Line</span></option>
     </select>
     <label for="station-select">
       <span class="lang-zh">請選擇車站</span>
       <span class="lang-en">Select Station</span>
     </label>
-    <select id="station-select" aria-label="選擇港鐵車站" disabled>
-      <option value=""><span class="lang-zh">-- 請先選擇路綫 --</span><span class="lang-en">-- Select Line First --</span></option>
+    <select id="station-select" aria-label="請選擇車站" disabled>
+      <option value=""><span class="lang-zh">請先選擇路綫</span><span class="lang-en">Select Line First</span></option>
     </select>
-    <button id="fetch-schedule" class="large-button">
-      <span class="lang-zh">查詢時間表</span>
-      <span class="lang-en">Fetch Schedule</span>
+    <button id="fetch-schedule" class="large-button" disabled>
+      <span class="lang-zh">查詢列車</span>
+      <span class="lang-en">Fetch Trains</span>
     </button>
     <div id="loading" style="display:none;">
       <span class="lang-zh">載入中…</span>
       <span class="lang-en">Loading…</span>
     </div>
-    <div id="error" style="display:none;"></div>
+    <div id="error" style="display:none;color:red;font-weight:bold;"></div>
     <div id="schedule-list"></div>
-    <button id="btn-home" class="large-button" style="margin-top: 2.3rem;">
-      <span class="lang-zh">返回首頁</span>
-      <span class="lang-en">Back to Home</span>
-    </button>
   </main>
-  <script src="script.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase.js"></script>
+<script src="prefs.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
