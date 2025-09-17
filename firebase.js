@@ -10,9 +10,8 @@
       return;
     }
 
-    // TODO: Replace with your Firebase project config
     const firebaseConfig = {
-      apiKey: "AIzaSyDOC9QnSFz8inpL6YGIzWy0rz05Iyf7s50",
+      apiKey: "env.firebasekey.get()",
       authDomain: "app-cloud-11d89.firebaseapp.com",
       projectId: "app-cloud-11d89",
       storageBucket: "app-cloud-11d89.appspot.com",
