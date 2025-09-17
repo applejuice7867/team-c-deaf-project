@@ -399,3 +399,69 @@ body.lang-zh-HK .lang-zh { display: inline; }
 body.lang-zh-HK .lang-en { display: none; }
 body.lang-en .lang-zh { display: none; }
 body.lang-en .lang-en { display: inline; }
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 1rem;
+}
+.modal {
+  background: #fff;
+  color: #000;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  text-align: center;
+}
+.modal h2 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.6rem;
+}
+.modal p {
+  margin: 0 0 1rem 0;
+}
+.modal .modal-actions {
+  display: flex;
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+.modal .btn-primary {
+  flex: 1;
+  background: #ff8d21;
+  color: #000;
+  border: none;
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+.modal .btn-secondary {
+  flex: 1;
+  background: #eee;
+  color: #000;
+  border: none;
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+.dark-mode .modal {
+  background: #2a2a2a;
+  color: #e0e0e0;
+}
+.dark-mode .modal .btn-primary {
+  background: #8a2be2;
+  color: #fff;
+}
+.dark-mode .modal .btn-secondary {
+  background: #3a3a3a;
+  color: #e0e0e0;
+}

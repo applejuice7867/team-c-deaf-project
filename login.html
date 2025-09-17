@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login / 登入</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <h1>
+      <span class="lang-zh">登入或註冊</span>
+      <span class="lang-en">Login or Sign Up</span>
+    </h1>
+
+    <div style="text-align:left;max-width:420px;margin:0 auto;width:100%;">
+      <label for="email-input">
+        <span class="lang-zh">電郵</span>
+        <span class="lang-en">Email</span>
+      </label>
+      <input id="email-input" type="text" placeholder="email@example.com" />
+
+      <label for="password-input">
+        <span class="lang-zh">密碼</span>
+        <span class="lang-en">Password</span>
+      </label>
+      <input id="password-input" type="password" placeholder="••••••••" />
+
+      <div style="display:flex;gap:0.6rem;margin-top:0.6rem;">
+        <button id="btn-email-login" class="large-button" style="flex:1;">
+          <span class="lang-zh">登入</span>
+          <span class="lang-en">Login</span>
+        </button>
+        <button id="btn-email-signup" class="large-button" style="flex:1;">
+          <span class="lang-zh">註冊</span>
+          <span class="lang-en">Sign Up</span>
+        </button>
+      </div>
+
+      <div style="text-align:center;margin:1rem 0;">
+        <span class="lang-zh">或</span>
+        <span class="lang-en">or</span>
+      </div>
+
+      <button id="btn-email-link" class="large-button" style="width:100%;">
+        <span class="lang-zh">以電郵連結登入</span>
+        <span class="lang-en">Sign in with Email Link</span>
+      </button>
+
+      <div style="text-align:center;margin:0.6rem 0;">
+        <small>
+          <span class="lang-zh">我們會把登入連結寄到你的電郵。</span>
+          <span class="lang-en">We'll send a sign-in link to your email.</span>
+        </small>
+      </div>
+
+      <div style="text-align:center;margin:1rem 0;">
+        <span class="lang-zh">或</span>
+        <span class="lang-en">or</span>
+      </div>
+
+      <button id="btn-google" class="large-button" style="width:100%;">
+        <span class="lang-zh">以 Google 登入</span>
+        <span class="lang-en">Sign in with Google</span>
+      </button>
+
+      <div id="auth-error" style="color:red;font-weight:bold;margin-top:0.8rem;display:none;"></div>
+      <div id="auth-success" style="color:green;font-weight:bold;margin-top:0.8rem;display:none;"></div>
+
+      <button id="btn-back" class="large-button" style="width:100%;margin-top:1rem;">
+        <span class="lang-zh">返回</span>
+        <span class="lang-en">Back</span>
+      </button>
+    </div>
+  </main>
+
+  <div class="bottom-nav">
+    <button id="nav-home" class="nav-btn" aria-label="主頁"><span style="font-size:2rem;">🏠</span></button>
+    <button id="nav-settings" class="nav-btn" aria-label="設定">
+      <img src="../images/setting-icon.png" alt="設定" class="settings-icon-light" style="height:32px;width:32px;object-fit:contain;" />
+      <img src="../images/settings-icon-dark.png" alt="設定" class="settings-icon-dark" style="height:32px;width:32px;object-fit:contain;" />
+    </button>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="firebase.js"></script>
+  <script src="prefs.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async function() {
+      const lang = localStorage.getItem('lang') || 'zh-HK';
+      document.body.classList.remove('lang-zh-HK', 'lang-en');
+      document.body.classList.add(lang === 'en' ? 'lang-en' : 'lang-zh-HK');
+
+      const emailEl = document.getElementById('email-input');
+      const pwEl = document.getElementById('password-input');
+      const btnLogin = document.getElementById('btn-email-login');
+      const btnSignup = document.getElementById('btn-email-signup');
+      const btnEmailLink = document.getElementById('btn-email-link');
+      const btnGoogle = document.getElementById('btn-google');
+      const backBtn = document.getElementById('btn-back');
+      const errEl = document.getElementById('auth-error');
+      const okEl = document.getElementById('auth-success');
+
+      function showError(msg) {
+        errEl.style.display = 'block';
+        okEl.style.display = 'none';
+        errEl.textContent = msg;
+      }
+      function showOk(msg) {
+        okEl.style.display = 'block';
+        errEl.style.display = 'none';
+        okEl.textContent = msg;
+      }
+      function ensureFirebase() {
+        if (!window.firebaseReady || !window.auth) {
+          showError(lang === 'en' ? 'Firebase not ready. Please retry.' : 'Firebase 未就緒，請稍後重試。');
+          return false;
+        }
+        return true;
+      }
+
+      // Complete email link sign-in if this is an incoming link
+      try {
+        if (ensureFirebase()) {
+          if (window.auth.isSignInWithEmailLink(window.location.href)) {
+            let email = window.localStorage.getItem('emailForSignIn');
+            if (!email) {
+              email = window.prompt(lang === 'en' ? 'Please confirm your email' : '請輸入你的電郵');
+            }
+            if (email) {
+              await window.auth.signInWithEmailLink(email, window.location.href);
+              window.localStorage.removeItem('emailForSignIn');
+              localStorage.setItem('authModalDismissed', '1');
+              showOk(lang === 'en' ? 'Signed in!' : '登入成功！');
+              setTimeout(() => window.location.href = './settings.html', 800);
+              return;
+            }
+          }
+        }
+      } catch (e) {
+        console.warn('Email link completion failed', e);
+      }
+
+      btnLogin.addEventListener('click', async function() {
+        if (!ensureFirebase()) return;
+        const email = emailEl.value.trim();
+        const pw = pwEl.value;
+        if (!email || !pw) return showError(lang === 'en' ? 'Email and password required.' : '請輸入電郵與密碼。');
+        try {
+          await window.auth.signInWithEmailAndPassword(email, pw);
+          localStorage.setItem('authModalDismissed', '1');
+          showOk(lang === 'en' ? 'Signed in!' : '登入成功！');
+          setTimeout(() => window.location.href = './settings.html', 800);
+        } catch (e) {
+          showError(e && e.message ? e.message : 'Login failed');
+        }
+      });
+
+      btnSignup.addEventListener('click', async function() {
+        if (!ensureFirebase()) return;
+        const email = emailEl.value.trim();
+        const pw = pwEl.value;
+        if (!email || !pw) return showError(lang === 'en' ? 'Email and password required.' : '請輸入電郵與密碼。');
+        try {
+          await window.auth.createUserWithEmailAndPassword(email, pw);
+          localStorage.setItem('authModalDismissed', '1');
+          showOk(lang === 'en' ? 'Account created!' : '帳戶已建立！');
+          setTimeout(() => window.location.href = './settings.html', 800);
+        } catch (e) {
+          showError(e && e.message ? e.message : 'Signup failed');
+        }
+      });
+
+      btnEmailLink.addEventListener('click', async function() {
+        if (!ensureFirebase()) return;
+        const email = emailEl.value.trim();
+        if (!email) return showError(lang === 'en' ? 'Please enter your email.' : '請輸入你的電郵。');
+        try {
+          const actionCodeSettings = {
+            url: window.location.origin + '/login.html',
+            handleCodeInApp: true
+          };
+          await window.auth.sendSignInLinkToEmail(email, actionCodeSettings);
+          window.localStorage.setItem('emailForSignIn', email);
+          showOk(lang === 'en' ? 'Email link sent! Check your inbox.' : '登入連結已寄出，請檢查電郵。');
+        } catch (e) {
+          showError(e && e.message ? e.message : 'Failed to send email link');
+        }
+      });
+
+      btnGoogle.addEventListener('click', async function() {
+        if (!ensureFirebase()) return;
+        try {
+          const provider = new firebase.auth.GoogleAuthProvider();
+          await window.auth.signInWithPopup(provider);
+          localStorage.setItem('authModalDismissed', '1');
+          showOk(lang === 'en' ? 'Signed in with Google!' : '已使用 Google 登入！');
+          setTimeout(() => window.location.href = './settings.html', 800);
+        } catch (e) {
+          showError(e && e.message ? e.message : 'Google sign-in failed');
+        }
+      });
+
+      backBtn.addEventListener('click', function() {
+        window.history.length > 1 ? window.history.back() : window.location.href = './index.html';
+      });
+    });
+  </script>
+</body>
+</html>

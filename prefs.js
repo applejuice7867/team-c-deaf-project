@@ -23,15 +23,63 @@
     } catch (e) { console.warn('applyThemePref error', e); }
   }
 
-  // If Firebase is available, listen for signed-in user and load prefs
+  function createAuthModal() {
+    if (document.getElementById('auth-modal-overlay')) return null;
+    const overlay = document.createElement('div');
+    overlay.id = 'auth-modal-overlay';
+    overlay.className = 'modal-overlay';
+
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+
+    const h2 = document.createElement('h2');
+    h2.innerHTML = '<span class="lang-zh">登入或註冊</span><span class="lang-en">Sign in or Sign up</span>';
+    const p = document.createElement('p');
+    p.innerHTML = '<span class="lang-zh">登入後可同步您的主題和語言設定。</span><span class="lang-en">Sign in to sync your theme and language preferences.</span>';
+
+    const actions = document.createElement('div');
+    actions.className = 'modal-actions';
+
+    const btnGo = document.createElement('button');
+    btnGo.className = 'btn-primary';
+    btnGo.innerHTML = '<span class="lang-zh">前往登入</span><span class="lang-en">Go to Login</span>';
+    btnGo.onclick = function() {
+      window.location.href = './login.html';
+    };
+
+    const btnLater = document.createElement('button');
+    btnLater.className = 'btn-secondary';
+    btnLater.innerHTML = '<span class="lang-zh">稍後</span><span class="lang-en">Later</span>';
+    btnLater.onclick = function() {
+      overlay.style.display = 'none';
+    };
+
+    actions.appendChild(btnGo);
+    actions.appendChild(btnLater);
+
+    modal.appendChild(h2);
+    modal.appendChild(p);
+    modal.appendChild(actions);
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+    return overlay;
+  }
+
+  function showAuthModalNow() {
+    const overlay = createAuthModal();
+    if (overlay) overlay.style.display = 'flex';
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
-    // Always apply localStorage first for instant paint
     const storedLang = localStorage.getItem('lang') || 'zh-HK';
     applyLanguage(storedLang);
     const storedTheme = localStorage.getItem('theme') || 'light';
     applyThemePref(storedTheme);
 
-    if (!window.firebaseReady || !window.auth || !window.db) return;
+    if (!window.firebaseReady || !window.auth || !window.db) {
+      showAuthModalNow();
+      return;
+    }
 
     window.auth.onAuthStateChanged(async function(user) {
       const statusEl = document.getElementById('auth-status');
@@ -57,6 +105,7 @@
         if (statusEl) statusEl.textContent = (localStorage.getItem('lang') === 'en') ? 'Not signed in' : '未登入';
         if (signInBtn) signInBtn.style.display = 'inline-block';
         if (signOutBtn) signOutBtn.style.display = 'none';
+        showAuthModalNow();
       }
     });
   });
