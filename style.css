@@ -153,6 +153,12 @@ h1 {
   line-height: 1;
 }
 
+.btn-icon img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
 .btn-text {
   font-size: 1.2rem;
   font-weight: bold;
@@ -161,6 +167,10 @@ h1 {
 }
 
 .dark-mode .btn-text {
+  color: #fff;
+}
+
+.dark-mode .btn-icon {
   color: #fff;
 }
 
@@ -239,7 +249,7 @@ label {
   font-weight: bold; /* Make labels bold */
   display: block; /* Ensure labels are block elements */
   margin-bottom: 0.5rem; /* Add some bottom margin */
-  text-align: left; /* Ensure labels are left-aligned within their containers */
+  text-align: center; /* Ensure labels are left-aligned within their containers */
 }
 
 /* Ensure main content is centered and has appropriate font sizes */
@@ -370,13 +380,38 @@ textarea {
 }
 
 .dark-mode .nav-btn {
-  color: #8a2be2;
+  color: #fff;
 }
 
 .dark-mode .nav-btn.active {
   background: #8a2be2;
   color: white;
 }
+
+.nav-icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.theme-toggle-icon {
+  width: 32px; /* Set a desired size */
+  height: 32px; /* Set a desired size */
+  display: block;
+  flex-shrink: 0; /* Prevent the icon from shrinking */
+}
+
+/* Style for the button that contains the theme toggle icon */
+#theme-toggle-button {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center horizontally */
+  flex: none; /* Do not allow the button to grow or shrink based on flex container */
+  padding: 0.5rem; /* Adjust padding as needed */
+  font-size: unset;
+  margin: 0 auto; /* Center the button itself */
+}
+
 
 /* Settings icon theme switching */
 .settings-icon-light {

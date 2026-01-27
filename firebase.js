@@ -35,3 +35,4 @@
     window.firebaseReady = false;
   }
 })();
+

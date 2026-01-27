@@ -39,8 +39,6 @@
     </div>
     <div style="margin-bottom:2rem;">
       <button id="theme-toggle-button" class="large-button" style="width:100%;max-width:320px;">
-        <span class="lang-zh">切換主題</span>
-        <span class="lang-en">Toggle Theme</span>
       </button>
     </div>
     <div style="margin-bottom:2rem;">
@@ -52,7 +50,10 @@
   </main>
   <div class="bottom-nav">
     <button id="nav-home" class="nav-btn" aria-label="主頁">
-      <span style="font-size:2rem;">🏠</span>
+      <svg width="24px" height="24px" viewBox="0 0 24 24" stroke-width="1.5" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor"><path d="M2 8L11.7317 3.13416C11.9006 3.04971 12.0994 3.04970 12.2683 3.13416L22 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M20 11V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </button>
+    <button id="nav-transport" class="nav-btn" aria-label="交通">
+      <svg width="24px" height="24px" viewBox="0 0 24 24" stroke-width="1.5" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor"><path d="M7 16.01L7.01 15.9989" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M17 16.01L17.01 15.9989" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3 12H21V19C21 19.5523 20.5523 20 20 20H4C3.44772 20 3 19.5523 3 19V12Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M21 8V6C21 3.79086 19.2091 2 17 2H7C4.79086 2 3 3.79086 3 6V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M7 8L17 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.5 20V21.9C4.5 22.2314 4.76863 22.5 5.1 22.5H7.9C8.23137 22.5 8.5 22.2314 8.5 21.9V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path><path d="M15.5 20V21.9C15.5 22.2314 15.7686 22.5 16.1 22.5H18.9C19.2314 22.5 19.5 22.2314 19.5 21.9V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>
     </button>
     <button id="nav-settings" class="nav-btn" aria-label="設定">
       <img src="../images/setting-icon.png" alt="設定" class="settings-icon-light" style="height:32px;width:32px;object-fit:contain;" />
@@ -80,14 +81,22 @@
         selectedTheme = theme;
         if (theme === 'dark') {
           document.body.classList.add('dark-mode');
-          themeToggleBtn.textContent = '☀️';
-          themeToggleBtn.style.backgroundColor = '#1a1a1a';
-          themeToggleBtn.style.color = 'white';
-        } else {
+          themeToggleBtn.innerHTML = `<svg class="theme-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="4"/>
+    <path d="M12 2v2"/>
+    <path d="M12 20v2"/>
+    <path d="M4.93 4.93l1.41 1.41"/>
+    <path d="M17.66 17.66l1.41 1.41"/>
+    <path d="M2 12h2"/>
+    <path d="M20 12h2"/>
+    <path d="M4.93 19.07l1.41-1.41"/>
+    <path d="M17.66 6.34l1.41-1.41"/>
+  </svg>`;
+        } else { // Light mode
           document.body.classList.remove('dark-mode');
-          themeToggleBtn.textContent = '🌙';
-          themeToggleBtn.style.backgroundColor = 'white';
-          themeToggleBtn.style.color = 'black';
+          themeToggleBtn.innerHTML = `<svg class="theme-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M21 12.8A8.5 8.5 0 0 1 11.2 3a7 7 0 1 0 9.8 9.8Z"/>
+  </svg>`;
         }
       }
       setTheme(selectedTheme);
