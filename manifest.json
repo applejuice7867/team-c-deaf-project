@@ -4,7 +4,7 @@
   "description": "Smart transport companion for deaf and hard-of-hearing elderly in Hong Kong",
   "lang": "en-HK",
   "dir": "ltr",
-  "start_url": "/index.html",
+  "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "display_override": ["standalone", "fullscreen"],
