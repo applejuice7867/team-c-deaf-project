@@ -1,32 +1,10 @@
 const CACHE_NAME = 'hk-deaf-transit-v3';
-const urlsToCache = [
-  '/index.html',
-  '/style.css',
-  '/script.js',
-  '/prefs.js',
-  '/firebase.js',
-  '/bus.html',
-  '/minibus.html',
-  '/mtr.html',
-  '/transport.html',
-  '/stt.html',
-  '/settings.html',
-  '/login.html',
-];
 
-// Install: cache assets one-by-one so a single 404/fail doesn't break install
+// Install: only create the cache. Do not precache — fetches during install often
+// fail on Cloudflare/other hosts (404, timing). Cache is filled by the fetch
+// handler when the page loads assets.
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return Promise.allSettled(
-        urlsToCache.map((url) =>
-          cache.add(url).catch((err) => {
-            console.warn('Cache skip:', url, err);
-          })
-        )
-      );
-    })
-  );
+  event.waitUntil(caches.open(CACHE_NAME).then(() => {}));
   self.skipWaiting();
 });
 
