@@ -762,9 +762,11 @@ window.addEventListener('DOMContentLoaded', () => {
 // --- Service Worker Registration ---
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
+    // Use current origin so SW is found on Cloudflare Pages / any host
+    const swUrl = new URL('service-worker.js', window.location.origin).href;
+    navigator.serviceWorker.register(swUrl, { scope: '/' })
       .then((registration) => {
-        console.log('Service Worker registered successfully:', registration);
+        console.log('Service Worker registered:', registration.scope);
       })
       .catch((error) => {
         console.warn('Service Worker registration failed:', error);

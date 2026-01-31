@@ -1,0 +1,11 @@
+# Cloudflare Pages: ensure service worker is detectable (PWA Builder, etc.)
+# Service worker MUST be served as application/javascript to register
+/service-worker.js
+  Content-Type: application/javascript
+  Cache-Control: no-cache, no-store, must-revalidate
+  Service-Worker-Allowed: /
+
+# Manifest for PWA
+/manifest.json
+  Content-Type: application/manifest+json
+  Cache-Control: no-cache
