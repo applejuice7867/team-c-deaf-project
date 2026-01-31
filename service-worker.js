@@ -14,14 +14,17 @@ const urlsToCache = [
   '/login.html',
 ];
 
-// Install: cache assets (do not cache '/' to avoid issues)
+// Install: cache assets one-by-one so a single 404/fail doesn't break install
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(urlsToCache).catch((error) => {
-        console.warn('Cache addAll error:', error);
-        return Promise.resolve();
-      });
+      return Promise.allSettled(
+        urlsToCache.map((url) =>
+          cache.add(url).catch((err) => {
+            console.warn('Cache skip:', url, err);
+          })
+        )
+      );
     })
   );
   self.skipWaiting();
