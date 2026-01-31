@@ -91,7 +91,7 @@ console.log("Bus page script loaded");
 const backButtonBus = document.getElementById('back-button');
 if (backButtonBus) {
   backButtonBus.addEventListener('click', () => {
-    window.location.href = './index';
+    window.location.href = './';
   });
 }
 
@@ -301,7 +301,7 @@ const speechTextarea = document.getElementById('speech-textarea');
 
 if (btnHomeMinibus) {
   btnHomeMinibus.addEventListener('click', () => {
-    window.location.href = './index.html';
+    window.location.href = './';
   });
 }
 
@@ -744,7 +744,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const btnHomeMTR = document.getElementById('btn-home');
   if (btnHomeMTR) {
     btnHomeMTR.addEventListener('click', () => {
-      window.location.href = './index.html';
+      window.location.href = './';
     });
   }
 

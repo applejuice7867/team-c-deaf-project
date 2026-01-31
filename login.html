@@ -134,7 +134,7 @@
               window.localStorage.removeItem('emailForSignIn');
               localStorage.setItem('authModalDismissed', '1');
               showOk(lang === 'en' ? 'Signed in!' : '登入成功！');
-              setTimeout(() => window.location.href = './settings.html', 800);
+              setTimeout(() => window.location.href = './settings', 800);
               return;
             }
           }
@@ -152,7 +152,7 @@
           await window.auth.signInWithEmailAndPassword(email, pw);
           localStorage.setItem('authModalDismissed', '1');
           showOk(lang === 'en' ? 'Signed in!' : '登入成功！');
-          setTimeout(() => window.location.href = './settings.html', 800);
+          setTimeout(() => window.location.href = './settings', 800);
         } catch (e) {
           showError(e && e.message ? e.message : 'Login failed');
         }
@@ -167,7 +167,7 @@
           await window.auth.createUserWithEmailAndPassword(email, pw);
           localStorage.setItem('authModalDismissed', '1');
           showOk(lang === 'en' ? 'Account created!' : '帳戶已建立！');
-          setTimeout(() => window.location.href = './settings.html', 800);
+          setTimeout(() => window.location.href = './settings', 800);
         } catch (e) {
           showError(e && e.message ? e.message : 'Signup failed');
         }
@@ -179,7 +179,7 @@
         if (!email) return showError(lang === 'en' ? 'Please enter your email.' : '請輸入你的電郵。');
         try {
           const actionCodeSettings = {
-            url: window.location.origin + '/login.html',
+            url: window.location.origin + '/login',
             handleCodeInApp: true
           };
           await window.auth.sendSignInLinkToEmail(email, actionCodeSettings);
@@ -197,14 +197,14 @@
           await window.auth.signInWithPopup(provider);
           localStorage.setItem('authModalDismissed', '1');
           showOk(lang === 'en' ? 'Signed in with Google!' : '已使用 Google 登入！');
-          setTimeout(() => window.location.href = './settings.html', 800);
+          setTimeout(() => window.location.href = './settings', 800);
         } catch (e) {
           showError(e && e.message ? e.message : 'Google sign-in failed');
         }
       });
 
       backBtn.addEventListener('click', function() {
-        window.history.length > 1 ? window.history.back() : window.location.href = './index.html';
+        window.history.length > 1 ? window.history.back() : window.location.href = './';
       });
     });
   </script>
