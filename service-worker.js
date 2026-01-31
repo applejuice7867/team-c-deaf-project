@@ -6,13 +6,13 @@ const urlsToCache = [
   '/script.js',
   '/prefs.js',
   '/firebase.js',
-  '/bus.html',
-  '/minibus.html',
-  '/mtr.html',
-  '/transport.html',
-  '/stt.html',
-  '/settings.html',
-  '/login.html',
+  '/bus',
+  '/minibus',
+  '/mtr',
+  '/transport',
+  '/stt',
+  '/settings',
+  '/login',
 ];
 
 // Install event - cache files
