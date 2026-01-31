@@ -39,49 +39,49 @@ setTheme(localStorage.getItem('theme') || 'light');
 
 // Transport page navigation
 document.getElementById('btn-mtr')?.addEventListener('click', () => {
-  window.location.href = './mtr';
+  window.location.href = '/mtr';
 });
 document.getElementById('btn-minibus')?.addEventListener('click', () => {
-  window.location.href = './minibus';
+  window.location.href = '/minibus';
 });
 document.getElementById('btn-bus')?.addEventListener('click', () => {
-  window.location.href = './bus';
+  window.location.href = '/bus';
 });
 
 // Home page quick access buttons
 document.getElementById('btn-transport')?.addEventListener('click', () => {
-  window.location.href = './transport';
+  window.location.href = '/transport';
 });
 
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-back-to-index')?.addEventListener('click', () => {
-    window.location.href = './';
+    window.location.href = '/';
   });
 });
 document.getElementById('btn-stt')?.addEventListener('click', () => {
-  window.location.href = './stt';
+  window.location.href = '/stt';
 });
 document.getElementById('btn-stt')?.addEventListener('click', () => {
-  window.location.href = './stt';
+  window.location.href = '/stt';
 });
 
 // --- Bottom Navigation ---
 const navSettingsBtn = document.getElementById('nav-settings');
 if (navSettingsBtn) {
   navSettingsBtn.addEventListener('click', () => {
-    window.location.href = './settings';
+    window.location.href = '/settings';
   });
 }
 const navHomeBtn = document.getElementById('nav-home');
 if (navHomeBtn) {
   navHomeBtn.addEventListener('click', () => {
-    window.location.href = './';
+    window.location.href = '/';
   });
 }
 const navTransportBtn = document.getElementById('nav-transport');
 if (navTransportBtn) {
   navTransportBtn.addEventListener('click', () => {
-    window.location.href = './transport';
+    window.location.href = '/transport';
   });
 }
 
@@ -91,7 +91,7 @@ console.log("Bus page script loaded");
 const backButtonBus = document.getElementById('back-button');
 if (backButtonBus) {
   backButtonBus.addEventListener('click', () => {
-    window.location.href = './';
+    window.location.href = '/';
   });
 }
 
@@ -301,7 +301,7 @@ const speechTextarea = document.getElementById('speech-textarea');
 
 if (btnHomeMinibus) {
   btnHomeMinibus.addEventListener('click', () => {
-    window.location.href = './';
+    window.location.href = '/';
   });
 }
 
@@ -744,7 +744,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const btnHomeMTR = document.getElementById('btn-home');
   if (btnHomeMTR) {
     btnHomeMTR.addEventListener('click', () => {
-      window.location.href = './';
+      window.location.href = '/';
     });
   }
 
