@@ -44,7 +44,7 @@
     btnGo.className = 'btn-primary';
     btnGo.innerHTML = '<span class="lang-zh">前往登入</span><span class="lang-en">Go to Login</span>';
     btnGo.onclick = function() {
-      window.location.href = '/login';
+      window.location.href = '/login.html';
     };
 
     const btnLater = document.createElement('button');

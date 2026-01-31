@@ -39,18 +39,18 @@ setTheme(localStorage.getItem('theme') || 'light');
 
 // Transport page navigation
 document.getElementById('btn-mtr')?.addEventListener('click', () => {
-  window.location.href = '/mtr';
+  window.location.href = '/mtr.html';
 });
 document.getElementById('btn-minibus')?.addEventListener('click', () => {
-  window.location.href = '/minibus';
+  window.location.href = '/minibus.html';
 });
 document.getElementById('btn-bus')?.addEventListener('click', () => {
-  window.location.href = '/bus';
+  window.location.href = '/bus.html';
 });
 
 // Home page quick access buttons
 document.getElementById('btn-transport')?.addEventListener('click', () => {
-  window.location.href = '/transport';
+  window.location.href = '/transport.html';
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -59,17 +59,17 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 document.getElementById('btn-stt')?.addEventListener('click', () => {
-  window.location.href = '/stt';
+  window.location.href = '/stt.html';
 });
 document.getElementById('btn-stt')?.addEventListener('click', () => {
-  window.location.href = '/stt';
+  window.location.href = '/stt.html';
 });
 
 // --- Bottom Navigation ---
 const navSettingsBtn = document.getElementById('nav-settings');
 if (navSettingsBtn) {
   navSettingsBtn.addEventListener('click', () => {
-    window.location.href = '/settings';
+    window.location.href = '/settings.html';
   });
 }
 const navHomeBtn = document.getElementById('nav-home');
@@ -81,7 +81,7 @@ if (navHomeBtn) {
 const navTransportBtn = document.getElementById('nav-transport');
 if (navTransportBtn) {
   navTransportBtn.addEventListener('click', () => {
-    window.location.href = '/transport';
+    window.location.href = '/transport.html';
   });
 }
 

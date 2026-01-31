@@ -5,7 +5,7 @@ const CACHE_NAME = 'hk-deaf-transit-v3';
 // handler when the page loads assets.
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then(() => {}));
-  self.skipWaiting();
+agtg  self.skipWaiting();
 });
 
 // Activate: clean old caches
