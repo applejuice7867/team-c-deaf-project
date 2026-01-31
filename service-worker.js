@@ -1,6 +1,5 @@
-const CACHE_NAME = 'hk-deaf-transit-v2';
+const CACHE_NAME = 'hk-deaf-transit-v3';
 const urlsToCache = [
-  '/',
   '/index.html',
   '/style.css',
   '/script.js',
@@ -15,16 +14,7 @@ const urlsToCache = [
   '/login.html',
 ];
 
-// Map clean URL paths to the actual .html file (so navigation works without relying on server redirects)
-function getHtmlUrlForPath(pathname) {
-  const path = (pathname || '/').replace(/\/$/, '') || 'index';
-  if (path === 'index') return new URL('/index.html', self.location.origin).href;
-  const cleanPaths = ['bus', 'mtr', 'minibus', 'transport', 'stt', 'settings', 'login'];
-  if (cleanPaths.includes(path)) return new URL('/' + path + '.html', self.location.origin).href;
-  return null;
-}
-
-// Install event - cache files
+// Install: cache assets (do not cache '/' to avoid issues)
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -37,7 +27,7 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
 
-// Activate event - clean up old caches
+// Activate: clean old caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
@@ -53,55 +43,37 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Fetch event - serve from cache, fallback to network
+// Fetch: only cache subresources (scripts, styles, etc.). Do NOT intercept
+// document/navigation requests — let the browser load pages from the network
+// so the site always works (avoids ERR_FAILED and "無法連上這個網站").
 self.addEventListener('fetch', (event) => {
   if (!event.request.url.startsWith(self.location.origin)) {
     return;
   }
 
-  let request = event.request;
-
-  // For navigation requests (page loads), rewrite /bus -> /bus.html etc. so we always
-  // request a URL that exists. This fixes issues when server redirects aren't applied
-  // (e.g. first load, incognito, different devices).
+  // Critical: do not handle page navigations in the service worker.
+  // Let the browser fetch the document from Cloudflare so _redirects work.
   if (event.request.mode === 'navigate') {
-    const url = new URL(event.request.url);
-    const htmlHref = getHtmlUrlForPath(url.pathname);
-    if (htmlHref) {
-      request = new Request(htmlHref, {
-        method: event.request.method,
-        headers: event.request.headers,
-        mode: 'same-origin',
-        credentials: event.request.credentials,
-        redirect: 'follow',
-      });
-    }
+    return;
   }
 
   event.respondWith(
-    caches.match(request).then((response) => {
+    caches.match(event.request).then((response) => {
       if (response) {
         return response;
       }
-
-      return fetch(request)
-        .then((response) => {
-          if (!response || response.status !== 200 || response.type !== 'basic') {
-            return response;
-          }
-          const responseToCache = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(request, responseToCache);
-          });
+      return fetch(event.request).then((response) => {
+        if (!response || response.status !== 200 || response.type !== 'basic') {
           return response;
-        })
-        .catch(() => {
-          console.warn('Fetch failed for:', request.url);
-          // Return a basic offline fallback for navigations
-          if (event.request.mode === 'navigate') {
-            return caches.match('/index.html').then((r) => r || new Response('Offline', { status: 503, statusText: 'Service Unavailable' }));
-          }
+        }
+        const responseToCache = response.clone();
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, responseToCache);
         });
+        return response;
+      }).catch(() => {
+        return caches.match(event.request);
+      });
     })
   );
 });
