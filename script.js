@@ -39,49 +39,49 @@ setTheme(localStorage.getItem('theme') || 'light');
 
 // Transport page navigation
 document.getElementById('btn-mtr')?.addEventListener('click', () => {
-  window.location.href = './mtr.html';
+  window.location.href = '/mtr.html';
 });
 document.getElementById('btn-minibus')?.addEventListener('click', () => {
-  window.location.href = './minibus.html';
+  window.location.href = '/minibus.html';
 });
 document.getElementById('btn-bus')?.addEventListener('click', () => {
-  window.location.href = './bus.html';
+  window.location.href = '/bus.html';
 });
 
 // Home page quick access buttons
 document.getElementById('btn-transport')?.addEventListener('click', () => {
-  window.location.href = './transport.html';
+  window.location.href = '/transport.html';
 });
 
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-back-to-index')?.addEventListener('click', () => {
-    window.location.href = './index.html';
+    window.location.href = '/';
   });
 });
 document.getElementById('btn-stt')?.addEventListener('click', () => {
-  window.location.href = './stt.html';
+  window.location.href = '/stt.html';
 });
 document.getElementById('btn-stt')?.addEventListener('click', () => {
-  window.location.href = './stt.html';
+  window.location.href = '/stt.html';
 });
 
 // --- Bottom Navigation ---
 const navSettingsBtn = document.getElementById('nav-settings');
 if (navSettingsBtn) {
   navSettingsBtn.addEventListener('click', () => {
-    window.location.href = './settings.html';
+    window.location.href = '/settings.html';
   });
 }
 const navHomeBtn = document.getElementById('nav-home');
 if (navHomeBtn) {
   navHomeBtn.addEventListener('click', () => {
-    window.location.href = './index.html';
+    window.location.href = '/';
   });
 }
 const navTransportBtn = document.getElementById('nav-transport');
 if (navTransportBtn) {
   navTransportBtn.addEventListener('click', () => {
-    window.location.href = './transport.html';
+    window.location.href = '/transport.html';
   });
 }
 
@@ -91,7 +91,7 @@ console.log("Bus page script loaded");
 const backButtonBus = document.getElementById('back-button');
 if (backButtonBus) {
   backButtonBus.addEventListener('click', () => {
-    window.location.href = './index.html';
+    window.location.href = '/';
   });
 }
 
@@ -301,7 +301,7 @@ const speechTextarea = document.getElementById('speech-textarea');
 
 if (btnHomeMinibus) {
   btnHomeMinibus.addEventListener('click', () => {
-    window.location.href = './index.html';
+    window.location.href = '/';
   });
 }
 
@@ -744,7 +744,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const btnHomeMTR = document.getElementById('btn-home');
   if (btnHomeMTR) {
     btnHomeMTR.addEventListener('click', () => {
-      window.location.href = './index.html';
+      window.location.href = '/';
     });
   }
 
@@ -758,3 +758,18 @@ window.addEventListener('DOMContentLoaded', () => {
   document.body.classList.remove('lang-zh-HK', 'lang-en');
   document.body.classList.add(lang === 'en' ? 'lang-en' : 'lang-zh-HK');
 })();
+
+// --- Service Worker Registration ---
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    // Use current origin so SW is found on Cloudflare Pages / any host
+    const swUrl = new URL('service-worker.js', window.location.origin).href;
+    navigator.serviceWorker.register(swUrl, { scope: '/' })
+      .then((registration) => {
+        console.log('Service Worker registered:', registration.scope);
+      })
+      .catch((error) => {
+        console.warn('Service Worker registration failed:', error);
+      });
+  });
+}

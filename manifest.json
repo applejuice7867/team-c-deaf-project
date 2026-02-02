@@ -1,0 +1,57 @@
+{
+  "name": "HK Transit Aid",
+  "short_name": "TransitAid",
+  "description": "Smart transport companion for deaf and hard-of-hearing elderly in Hong Kong",
+  "lang": "en-HK",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "fullscreen"],
+  "orientation": "portrait-primary",
+  "background_color": "#FFFFFF",
+  "theme_color": "#000000",
+  "categories": ["navigation", "accessibility", "travel"],
+  "icons": [
+    {
+      "src": "images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+    "shortcuts": [
+    {
+        "name": "MTR",
+        "short_name": "MTR",
+        "description": "Open MTR assistance",
+        "url": "/mtr.html"
+    },
+    {
+        "name": "Street Transport",
+        "short_name": "STT",
+        "description": "Open street transport assistance",
+        "url": "/stt.html"
+    }
+    ],
+  "screenshots": [
+    {
+      "src": "images/creamshot.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "images/transport-creamshot.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ]
+}
