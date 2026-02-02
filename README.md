@@ -113,7 +113,8 @@ Chrome is needed as we are currently using speech to text from chrome.
   yay -S google-chrome
   ```
 * other distributions or operating systems  
-  Follow the instructions of your operating system to install google chrome.  
+  Follow the instructions of your operating system to install google chrome.
+  (Chrome is not needed if you aren't working on the speech to text) 
 
 ### Installation
 
